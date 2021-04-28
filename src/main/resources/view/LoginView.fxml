@@ -49,29 +49,26 @@
         </font>
     </PasswordField>
     <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
-        <Region HBox.hgrow="ALWAYS"/>
+        <Region HBox.hgrow="ALWAYS" />
         <ProgressIndicator fx:id="progressIndicator">
             <HBox.margin>
-                <Insets right="20.0"/>
+                <Insets right="20.0" />
             </HBox.margin>
         </ProgressIndicator>
-        <Label fx:id="invalidLoginLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="170.0"
-               text="Incorrect username/password." textFill="#eb0a0a" underline="true">
+        <Label fx:id="invalidLoginLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="170.0" text="Incorrect username/password." textFill="#eb0a0a" underline="true">
             <font>
-                <Font name="System Bold Italic" size="12.0"/>
+                <Font name="System Bold Italic" size="12.0" />
             </font>
             <HBox.margin>
-                <Insets right="20.0"/>
+                <Insets right="20.0" />
             </HBox.margin>
         </Label>
-        <Button fx:id="loginBtn" alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                prefHeight="51.0" prefWidth="124.0" style="-fx-background-color: #18C6F0; -fx-background-radius: 50;"
-                text="Login" textFill="WHITE" underline="true">
+        <Button fx:id="loginBtn" alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="124.0" style="-fx-background-color: #18C6F0; -fx-background-radius: 50;" text="Login" textFill="WHITE" underline="true">
             <font>
-                <Font name="System Bold Italic" size="24.0"/>
+                <Font name="System Bold Italic" size="24.0" />
             </font>
             <HBox.margin>
-                <Insets left="20.0" right="10.0"/>
+                <Insets left="20.0" right="10.0" />
             </HBox.margin>
         </Button>
     </HBox>
