@@ -2,6 +2,8 @@ package com.jvmtechs.controllers
 
 
 import com.jvmtechs.app.Styles
+import com.jvmtechs.controllers.home.HomeController
+import com.jvmtechs.controllers.user.UserController
 import javafx.event.EventHandler
 import javafx.scene.control.Label
 import javafx.scene.control.MenuBar
@@ -19,14 +21,14 @@ class HomeMenu : AbstractView("") {
         menu {
             graphic = Label("Job Cards").apply {
                 onMouseClicked = EventHandler {
-
+                    workspace.dock<HomeController>()
                 }
             }
         }
         menu {
             graphic = Label("Users").apply {
                 onMouseClicked = EventHandler {
-
+                    workspace.dock<UserController>()
                 }
             }
         }

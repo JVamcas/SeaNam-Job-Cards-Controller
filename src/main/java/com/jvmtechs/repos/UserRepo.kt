@@ -29,4 +29,17 @@ class UserRepo : AbstractRepo<User>() {
             session?.close()
         }
     }
+
+    suspend fun loadEmployees(): Results {
+        return try {
+            withContext(Dispatchers.IO){
+
+
+                Results.Success<ArrayList<User>>(data = arrayListOf(),code = Results.Success.CODE.LOAD_SUCCESS)
+            }
+        }
+        catch (e: Exception){
+            Results.Error(e)
+        }
+    }
 }

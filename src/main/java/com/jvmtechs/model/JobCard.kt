@@ -33,6 +33,7 @@ class JobCard(
     IsJobDoneToExpectations: Boolean = false,
     otherExplanation: String? = null,
     supervisor: User? = null,
+    jobCardNo: String? = null
 ) {
 
     @Id
@@ -42,6 +43,10 @@ class JobCard(
     @Column(name = "deleted", nullable = false)
     @Convert(converter = SimpleBooleanConvertor::class)
     val deletedProperty = SimpleBooleanProperty(deleted)
+
+    @Column(name = "job_card_no")
+    @Convert(converter = SimpleStringConvertor::class)
+    val jobCardNoProperty = SimpleStringProperty(jobCardNo)
 
     @Column(name = "job_description")
     @Convert(converter = SimpleStringConvertor::class)

@@ -1,6 +1,6 @@
 package com.jvmtechs.app
 
-import com.jvmtechs.controllers.user.LoginController
+import com.jvmtechs.controllers.LoginController
 import com.jvmtechs.utils.SessionManager
 import tornadofx.*
 

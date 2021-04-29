@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<GridPane style="-fx-background-color: #05509B;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane style="-fx-background-color: #BFC6C8;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -20,7 +21,7 @@
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <TitledPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="602.0" style="-fx-background-color: #05509B;" text="Job Card Queries">
+      <TitledPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="602.0" text="Job Card Queries">
         <content>
             <GridPane maxHeight="-Infinity" prefHeight="197.0" prefWidth="602.0">
               <columnConstraints>
@@ -82,6 +83,9 @@
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="CLOSED_HAND" />
+                           </cursor>
                         </JFXButton>
                         <JFXButton buttonType="RAISED" ripplerFill="#f2c0c0" style="-fx-background-color: #F36020;" text="Clear" textFill="#f8f7f7">
                            <HBox.margin>
@@ -90,6 +94,9 @@
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="CLOSED_HAND" />
+                           </cursor>
                         </JFXButton>
                      </children>
                   </HBox>
@@ -102,6 +109,9 @@
          <GridPane.margin>
             <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
          </GridPane.margin>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
       </TitledPane>
    </children>
 </GridPane>

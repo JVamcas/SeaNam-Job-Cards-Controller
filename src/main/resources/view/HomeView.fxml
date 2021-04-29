@@ -1,11 +1,339 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<BorderPane prefHeight="722.0" prefWidth="945.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <ScrollPane fx:id="tableViewScrollPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </center>
+<BorderPane prefHeight="903.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+       <VBox prefHeight="928.0" prefWidth="645.0" style="-fx-border-width: 2; -fx-border-color: #094F99;" BorderPane.alignment="CENTER">
+           <TitledPane alignment="CENTER" contentDisplay="TOP" text="Add Job Card" textFill="#119eab">
+               <font>
+                   <Font name="System Bold" size="12.0" />
+               </font>
+               <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="623.0" style="-fx-background-color: #E6EAEB; -fx-border-radius: 20;">
+                   <columnConstraints>
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   </columnConstraints>
+                   <rowConstraints>
+                       <RowConstraints maxHeight="220.0" minHeight="190.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                       <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   </rowConstraints>
+                   <children>
+                       <TitledPane collapsible="false" prefHeight="198.0" prefWidth="611.0" style="-fx-background-color: #BB33FF;" GridPane.columnSpan="2">
+                           <content>
+                               <GridPane prefHeight="86.0" prefWidth="600.0">
+                                   <columnConstraints>
+                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="75.0" prefWidth="120.0" />
+                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="220.0" />
+                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="75.0" prefWidth="100.0" />
+                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="220.0" />
+                                   </columnConstraints>
+                                   <rowConstraints>
+                                       <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                       <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                   </rowConstraints>
+                                   <children>
+                                       <Label text="Job card No:">
+                                           <padding>
+                                               <Insets left="5.0" />
+                                           </padding>
+                                       </Label>
+                                       <Label text="Area:" GridPane.rowIndex="1">
+                                           <padding>
+                                               <Insets left="5.0" />
+                                           </padding>
+                                       </Label>
+                                       <Label text="Class:" GridPane.columnIndex="2">
+                                           <padding>
+                                               <Insets left="5.0" />
+                                           </padding>
+                                       </Label>
+                                       <Label prefHeight="18.0" prefWidth="85.0" text="Order No(s):" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                           <padding>
+                                               <Insets left="5.0" />
+                                           </padding>
+                                       </Label>
+                                       <TextField fx:id="jobCardNo" GridPane.columnIndex="1" />
+                                       <TitledPane collapsible="false" prefHeight="86.0" prefWidth="587.0" text="Job Description" GridPane.columnSpan="4" GridPane.rowIndex="2">
+                                           <GridPane.margin>
+                                               <Insets left="5.0" top="10.0" />
+                                           </GridPane.margin>
+                                           <content>
+                                               <TextArea fx:id="jobDescription" maxHeight="-Infinity" minHeight="60.0" prefHeight="60.0" prefWidth="594.0">
+                                                   <effect>
+                                                       <Glow />
+                                                   </effect>
+                                               </TextArea>
+                                           </content>
+                                           <font>
+                                               <Font name="System Bold" size="12.0" />
+                                           </font>
+                                       </TitledPane>
+                                       <JFXComboBox fx:id="orderNoCombo" prefHeight="25.0" prefWidth="221.0" style="-fx-border-radius: 5; -fx-border-width: 1; -fx-border-color: #858781;" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                           <contextMenu>
+                                               <ContextMenu>
+                                                   <items>
+                                                       <MenuItem mnemonicParsing="false" text="New Order" />
+                                                   </items>
+                                               </ContextMenu>
+                                           </contextMenu>
+                                           <tooltip>
+                                               <Tooltip text="Right click for more options" />
+                                           </tooltip>
+                                       </JFXComboBox>
+                                       <JFXComboBox fx:id="jobClassCombo" prefHeight="25.0" prefWidth="219.0" style="-fx-border-radius: 5; -fx-border-width: 1; -fx-border-color: #858781;" GridPane.columnIndex="3">
+                                           <tooltip>
+                                               <Tooltip text="Right click for more options." />
+                                           </tooltip>
+                                       </JFXComboBox>
+                                       <JFXComboBox fx:id="jobAreaCombo" prefHeight="25.0" prefWidth="219.0" style="-fx-border-radius: 5; -fx-border-width: 1; -fx-border-color: #858781;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                           <tooltip>
+                                               <Tooltip text="Right click for more options." />
+                                           </tooltip>
+                                       </JFXComboBox>
+                                   </children>
+                               </GridPane>
+                           </content>
+                           <GridPane.margin>
+                               <Insets left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                           <font>
+                               <Font name="System Bold" size="12.0" />
+                           </font>
+                       </TitledPane>
+                       <TitledPane collapsible="false" text="Time Management" textFill="#2295b5" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                           <content>
+                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="98.0" prefWidth="611.0">
+                                   <children>
+                                       <HBox alignment="CENTER_LEFT" layoutX="1.0" layoutY="-4.0" prefHeight="50.0" prefWidth="613.0">
+                                           <children>
+                                               <Label alignment="TOP_LEFT" text="Start Time:">
+                                                   <HBox.margin>
+                                                       <Insets left="10.0" />
+                                                   </HBox.margin>
+                                               </Label>
+                                               <HBox fx:id="startTimeHbox" alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="50.0" prefWidth="220.0">
+                                                   <HBox.margin>
+                                                       <Insets left="10.0" />
+                                                   </HBox.margin>
+                                               </HBox>
+                                               <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="38.0" text="End Time:">
+                                                   <HBox.margin>
+                                                       <Insets left="10.0" />
+                                                   </HBox.margin>
+                                               </Label>
+                                               <HBox fx:id="endTimeHbox" alignment="CENTER_LEFT" layoutX="64.0" layoutY="10.0" prefHeight="50.0" prefWidth="220.0">
+                                                   <HBox.margin>
+                                                       <Insets left="10.0" />
+                                                   </HBox.margin>
+                                               </HBox>
+                                           </children>
+                                       </HBox>
+                                   </children>
+                               </AnchorPane>
+                           </content>
+                           <GridPane.margin>
+                               <Insets left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                           <font>
+                               <Font name="System Bold" size="12.0" />
+                           </font>
+                       </TitledPane>
+                       <TitledPane collapsible="false" text="Job Questionnaire" textFill="#e10f0f" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                           <font>
+                               <Font name="System Bold" size="12.0" />
+                           </font>
+                           <GridPane.margin>
+                               <Insets left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                           <content>
+                               <VBox prefHeight="281.0" prefWidth="611.0">
+                                   <children>
+                                       <JFXCheckBox fx:id="workDoneSats" checkedColor="#9ce1b1" text="Was work done satisfactory?" textFill="#46484a" unCheckedColor="#9fcae1">
+                                           <VBox.margin>
+                                               <Insets top="5.0" />
+                                           </VBox.margin>
+                                       </JFXCheckBox>
+                                       <JFXCheckBox fx:id="needReplacement" checkedColor="#9ce1b1" text="Does it need to be replaced?" textFill="#46484a" unCheckedColor="#9fcae1">
+                                           <VBox.margin>
+                                               <Insets top="5.0" />
+                                           </VBox.margin>
+                                       </JFXCheckBox>
+                                       <JFXCheckBox fx:id="recurringJob" checkedColor="#9ce1b1" text="Is it a recurring job?" textFill="#46484a" unCheckedColor="#9fcae1">
+                                           <VBox.margin>
+                                               <Insets top="5.0" />
+                                           </VBox.margin>
+                                       </JFXCheckBox>
+                                       <JFXCheckBox fx:id="timeSatisfactory" checkedColor="#9ce1b1" text="Was the timeframe satisfactory?" textFill="#46484a" unCheckedColor="#9fcae1">
+                                           <VBox.margin>
+                                               <Insets top="5.0" />
+                                           </VBox.margin>
+                                       </JFXCheckBox>
+                                       <JFXCheckBox fx:id="doneToSpecs" checkedColor="#9ce1b1" text="Was the work done according to expectations?" textFill="#46484a" unCheckedColor="#9fcae1">
+                                           <VBox.margin>
+                                               <Insets top="5.0" />
+                                           </VBox.margin>
+                                       </JFXCheckBox>
+                                       <TitledPane animated="false" text="If you did not check all the boxes above, Explain.">
+                                           <VBox.margin>
+                                               <Insets bottom="5.0" top="5.0" />
+                                           </VBox.margin>
+                                           <content>
+                                               <TextArea fx:id="otherExplanations" prefHeight="85.0" prefWidth="589.0" />
+                                           </content>
+                                       </TitledPane>
+                                       <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="589.0">
+                                           <children>
+                                               <JFXButton fx:id="saveJobCardBtn" buttonType="RAISED" ripplerFill="#39c7eb" style="-fx-background-color: #FDFDFD; -fx-border-radius: 5; -fx-border-color: #057A1F; -fx-border-width: 1;" text="Save" textFill="#057a1f">
+                                                   <HBox.margin>
+                                                       <Insets right="15.0" />
+                                                   </HBox.margin>
+                                                   <cursor>
+                                                       <Cursor fx:constant="CLOSED_HAND" />
+                                                   </cursor>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                               </JFXButton>
+                                               <JFXButton fx:id="clearJobCardBtn" buttonType="RAISED" ripplerFill="#e8a687" style="-fx-background-color: #F84635;" text="Clear" textFill="#fcf7f7">
+                                                   <font>
+                                                       <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                   <cursor>
+                                                       <Cursor fx:constant="CLOSED_HAND" />
+                                                   </cursor>
+                                               </JFXButton>
+                                           </children>
+                                       </HBox>
+                                   </children>
+                               </VBox>
+                           </content>
+                       </TitledPane>
+                   </children>
+                   <padding>
+                       <Insets bottom="10.0" />
+                   </padding>
+               </GridPane>
+            <VBox.margin>
+               <Insets left="10.0" right="10.0" top="5.0" />
+            </VBox.margin>
+           </TitledPane>
+             <TitledPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="438.0" text="Job Card Queries" textFill="#636808">
+                 <content>
+                     <GridPane maxHeight="-Infinity" prefHeight="229.0" prefWidth="559.0">
+                         <columnConstraints>
+                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
+                             <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="180.0" />
+                     <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="60.0" />
+                     <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="180.0" />
+                         </columnConstraints>
+                         <rowConstraints>
+                     <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                         </rowConstraints>
+                         <children>
+                             <Label text="Employee" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                     <Insets left="10.0" />
+                                 </GridPane.margin>
+                             </Label>
+                             <Label text="Work Class" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                     <Insets left="10.0" />
+                                 </GridPane.margin>
+                             </Label>
+                             <Label text="Work Area" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                     <Insets left="10.0" />
+                                 </GridPane.margin>
+                             </Label>
+                             <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="160.0" GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.vgrow="NEVER">
+                                 <children>
+                                     <JFXButton fx:id="qrSearchJobCardBtn" buttonType="RAISED" style="-fx-background-color: #FDFDFD; -fx-border-radius: 5; -fx-border-color: #057A1F; -fx-border-width: 1;" text="Search" textFill="#057a1f">
+                                         <HBox.margin>
+                                             <Insets right="10.0" />
+                                         </HBox.margin>
+                                         <font>
+                                             <Font name="System Bold" size="12.0" />
+                                         </font>
+                                         <cursor>
+                                             <Cursor fx:constant="CLOSED_HAND" />
+                                         </cursor>
+                                     </JFXButton>
+                                     <JFXButton fx:id="qrClearJobCardBtn" buttonType="RAISED" ripplerFill="#e8a687" style="-fx-background-color: #F36020;" text="Clear" textFill="#f8f7f7">
+                                         <HBox.margin>
+                                             <Insets right="5.0" />
+                                         </HBox.margin>
+                                         <font>
+                                             <Font name="System Bold" size="12.0" />
+                                         </font>
+                                         <cursor>
+                                             <Cursor fx:constant="CLOSED_HAND" />
+                                         </cursor>
+                                     </JFXButton>
+                                 </children>
+                             </HBox>
+                             <JFXComboBox fx:id="qrEmployeeCombo" opacity="0.99" prefHeight="27.0" prefWidth="507.0" style="-fx-border-width: 1; -fx-border-radius: 5; -fx-border-color: #B4B8AC;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                             <JFXComboBox fx:id="qrJobClassCombo" layoutX="310.0" layoutY="36.0" opacity="0.99" prefHeight="27.0" prefWidth="507.0" style="-fx-border-width: 1; -fx-border-radius: 5; -fx-border-color: #B4B8AC;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                             <JFXComboBox fx:id="qrWorkAreaCombo" layoutX="310.0" layoutY="36.0" opacity="0.99" prefHeight="27.0" prefWidth="506.0" style="-fx-border-width: 1; -fx-border-radius: 5; -fx-border-color: #B4B8AC;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+                     <Label layoutX="31.0" layoutY="50.0" text="Job Card No">
+                        <GridPane.margin>
+                           <Insets left="10.0" />
+                        </GridPane.margin>
+                     </Label>
+                     <TextField fx:id="qrJobCardNo" GridPane.columnIndex="1" GridPane.columnSpan="3" />
+                     <Label layoutX="31.0" layoutY="24.0" text="From" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                        <GridPane.margin>
+                           <Insets left="10.0" />
+                        </GridPane.margin>
+                     </Label>
+                     <Label layoutX="21.0" layoutY="120.0" text="To" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                        <GridPane.margin>
+                           <Insets right="10.0" />
+                        </GridPane.margin>
+                     </Label>
+                     <HBox fx:id="fromDateHBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <GridPane.margin>
+                           <Insets />
+                        </GridPane.margin>
+                     </HBox>
+                     <HBox fx:id="toDateHBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                         </children>
+                     </GridPane>
+                 </content>
+                 <font>
+                     <Font name="System Bold" size="12.0" />
+                 </font>
+            <VBox.margin>
+               <Insets bottom="5.0" left="10.0" top="5.0" />
+            </VBox.margin>
+             </TitledPane>
+       </VBox>
+   </left>
 </BorderPane>

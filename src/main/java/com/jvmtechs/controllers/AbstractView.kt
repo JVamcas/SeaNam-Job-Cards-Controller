@@ -2,7 +2,6 @@ package com.jvmtechs.controllers
 
 import com.jvmtechs.controllers.AbstractView.Account.currentUser
 import com.jvmtechs.controllers.home.HomeController
-import com.jvmtechs.controllers.user.LoginController
 import com.jvmtechs.model.User
 import com.jvmtechs.utils.ParseUtil.Companion.isInvalid
 import com.jvmtechs.utils.Results

@@ -53,6 +53,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/JavaFx/jfoenix-9.0.10.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:16" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:16" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:16" level="project" />
@@ -105,24 +114,12 @@
     <orderEntry type="library" name="Maven: org.jfxtras:jmetro:11.6.12" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:11.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:11.0.2" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.controlsfx:controlsfx:11.0.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.openjfx:javafx-media:11" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.openjfx:javafx-media:win:11" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.openjfx:javafx-web:11" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.openjfx:javafx-web:win:11" level="project" />
-    <orderEntry type="library" name="Maven: de.jensd:fontawesomefx:8.4" level="project" />
+    <orderEntry type="library" name="Maven: de.jensd:fontawesomefx-commons:9.1.2" level="project" />
+    <orderEntry type="library" name="Maven: de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:11.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.jfoenix:jfoenix:9.0.10" level="project" />
     <orderEntry type="library" name="Maven: com.gluonhq.attach:display:desktop:4.0.11" level="project" />
     <orderEntry type="library" name="Maven: com.gluonhq.attach:lifecycle:desktop:4.0.11" level="project" />
     <orderEntry type="library" name="Maven: com.gluonhq.attach:storage:desktop:4.0.11" level="project" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/JavaFx/jfoenix-9.0.10.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
   </component>
 </module>

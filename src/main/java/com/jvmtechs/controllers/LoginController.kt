@@ -1,17 +1,13 @@
-package com.jvmtechs.controllers.user
+package com.jvmtechs.controllers
 
 
-import com.jvmtechs.controllers.AbstractView
 import com.jvmtechs.controllers.AbstractView.Account.currentUser
 import com.jvmtechs.model.User
 import com.jvmtechs.model.UserModel
 import com.jvmtechs.repos.UserRepo
-import com.jvmtechs.utils.Results
 import javafx.application.Platform
 import javafx.scene.control.*
 import javafx.scene.layout.GridPane
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import tornadofx.*
 
 class LoginController : AbstractView("") {
