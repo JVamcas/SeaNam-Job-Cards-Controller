@@ -61,6 +61,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     init {
         root.apply {
 
+
             startDateHBox.let { container ->
 
                 container.children.add(
@@ -221,6 +222,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                         }
                     }
                 }
+                add(tableView)
             }
         }
     }

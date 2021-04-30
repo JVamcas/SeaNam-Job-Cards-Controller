@@ -69,7 +69,7 @@ abstract class AbstractView(private val viewTitle: String) : View(viewTitle) {
                     showError(
                         header = "Unknown Error", msg = "An unknown error has occurred. What to do:\n" +
                                 "1.  Restart the program.\n" +
-                                "2. If the error persists, please contact the Petrus Kambala @ 081 326 4666."
+                                "2. If the error persists, please contact Petrus Kambala @ 081 326 4666."
                     )
                 }
             }

@@ -17,7 +17,9 @@ class UserController : AbstractModelTableController<User>(title = "") {
 
     init {
         root.apply {
+
             center {
+
                 tableView = tableview(modelList) {
 
                     columnResizePolicy = TableView.UNCONSTRAINED_RESIZE_POLICY
@@ -45,14 +47,26 @@ class UserController : AbstractModelTableController<User>(title = "") {
                     column("Job Title", User::userGroupProperty) {
                         contentWidth(padding = 10.0, useAsMin = true)
                     }
+
+                    contextmenu {
+                        item("Employee Titles") {
+                            action {
+                                find(JobTitleTableController::class).openModal()
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
+    override fun onDock() {
+        super.onDock()
+        currentStage?.isMaximized = true
+    }
+
 
     override suspend fun loadModels(): ObservableList<User> {
-
 
         return observableListOf()
     }

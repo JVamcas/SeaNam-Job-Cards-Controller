@@ -4,6 +4,7 @@ import com.jvmtechs.utils.SimpleBooleanConvertor
 import com.jvmtechs.utils.SimpleStringConvertor
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
+import tornadofx.*
 import javax.persistence.*
 
 @Entity
@@ -26,3 +27,8 @@ class JobTitle(
     val deletedProperty = SimpleBooleanProperty(deleted)
 
 }
+
+class JobTitleModel : ItemViewModel<JobTitle>() {
+    var title = bind(JobTitle::titleNameProperty)
+}
+

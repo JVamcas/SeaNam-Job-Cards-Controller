@@ -25,7 +25,7 @@
 <BorderPane prefHeight="903.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <left>
        <VBox prefHeight="928.0" prefWidth="645.0" style="-fx-border-width: 2; -fx-border-color: #094F99;" BorderPane.alignment="CENTER">
-           <TitledPane alignment="CENTER" contentDisplay="TOP" text="Add Job Card" textFill="#119eab">
+           <TitledPane alignment="CENTER" contentDisplay="TOP" text="Add Job Card" textFill="#0861b5">
                <font>
                    <Font name="System Bold" size="12.0" />
                </font>
@@ -217,7 +217,7 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                                </JFXButton>
-                                               <JFXButton fx:id="clearJobCardBtn" buttonType="RAISED" ripplerFill="#e8a687" style="-fx-background-color: #F84635;" text="Clear" textFill="#fcf7f7">
+                                               <JFXButton fx:id="clearJobCardBtn" buttonType="RAISED" ripplerFill="#e8a687" style="-fx-background-color: #FFFFFF; -fx-border-color: #F61106; -fx-border-radius: 5;" text="Clear" textFill="#f61106">
                                                    <font>
                                                        <Font name="System Bold" size="12.0" />
                                                    </font>
@@ -286,7 +286,7 @@
                                              <Cursor fx:constant="CLOSED_HAND" />
                                          </cursor>
                                      </JFXButton>
-                                     <JFXButton fx:id="qrClearJobCardBtn" buttonType="RAISED" ripplerFill="#e8a687" style="-fx-background-color: #F36020;" text="Clear" textFill="#f8f7f7">
+                                     <JFXButton fx:id="qrClearJobCardBtn" buttonType="RAISED" ripplerFill="#e8a687" style="-fx-background-color: #ffffff; -fx-border-color: #F61106; -fx-border-radius: 5;" text="Clear" textFill="#f61106">
                                          <HBox.margin>
                                              <Insets right="5.0" />
                                          </HBox.margin>
@@ -308,12 +308,12 @@
                         </GridPane.margin>
                      </Label>
                      <TextField fx:id="qrJobCardNo" GridPane.columnIndex="1" GridPane.columnSpan="3" />
-                     <Label layoutX="31.0" layoutY="24.0" text="From" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <Label layoutX="31.0" layoutY="24.0" text="From:" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                         <GridPane.margin>
                            <Insets left="10.0" />
                         </GridPane.margin>
                      </Label>
-                     <Label layoutX="21.0" layoutY="120.0" text="To" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <Label layoutX="21.0" layoutY="120.0" text="To:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                         <GridPane.margin>
                            <Insets right="10.0" />
                         </GridPane.margin>
