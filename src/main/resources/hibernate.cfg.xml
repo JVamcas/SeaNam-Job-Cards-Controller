@@ -5,12 +5,12 @@
 <hibernate-configuration>
     <session-factory>
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
-        <property name="connection.url">jdbc:mysql://192.168.178.2:3306/seanam_fish_bins?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</property>
+        <property name="connection.url">jdbc:mysql://192.168.178.2:3306/seanam_job_cards?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</property>
         <property name="connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
         <property name="connection.username">namops</property>
         <property name="connection.password">3Mili2,87</property>
         <property name="current_session_context_class">thread</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+<!--        <property name="hibernate.hbm2ddl.auto">update</property>-->
         <property name="hibernate.c3p0.acquire_increment">1</property>
         <property name="hibernate.c3p0.idle_test_period">60</property>
         <property name="hibernate.c3p0.min_size">5</property>

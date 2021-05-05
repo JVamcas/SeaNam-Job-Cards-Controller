@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -25,7 +21,7 @@
 <BorderPane prefHeight="903.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <left>
        <VBox prefHeight="928.0" prefWidth="645.0" style="-fx-border-width: 2; -fx-border-color: #094F99;" BorderPane.alignment="CENTER">
-           <TitledPane alignment="CENTER" contentDisplay="TOP" text="Add Job Card" textFill="#0861b5">
+           <TitledPane alignment="CENTER" contentDisplay="TOP" text="New Job Card" textFill="#0861b5">
                <font>
                    <Font name="System Bold" size="12.0" />
                </font>
@@ -91,28 +87,9 @@
                                                <Font name="System Bold" size="12.0" />
                                            </font>
                                        </TitledPane>
-                                       <JFXComboBox fx:id="orderNoCombo" prefHeight="25.0" prefWidth="221.0" style="-fx-border-radius: 5; -fx-border-width: 1; -fx-border-color: #858781;" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                           <contextMenu>
-                                               <ContextMenu>
-                                                   <items>
-                                                       <MenuItem mnemonicParsing="false" text="New Order" />
-                                                   </items>
-                                               </ContextMenu>
-                                           </contextMenu>
-                                           <tooltip>
-                                               <Tooltip text="Right click for more options" />
-                                           </tooltip>
-                                       </JFXComboBox>
-                                       <JFXComboBox fx:id="jobClassCombo" prefHeight="25.0" prefWidth="219.0" style="-fx-border-radius: 5; -fx-border-width: 1; -fx-border-color: #858781;" GridPane.columnIndex="3">
-                                           <tooltip>
-                                               <Tooltip text="Right click for more options." />
-                                           </tooltip>
-                                       </JFXComboBox>
-                                       <JFXComboBox fx:id="jobAreaCombo" prefHeight="25.0" prefWidth="219.0" style="-fx-border-radius: 5; -fx-border-width: 1; -fx-border-color: #858781;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                           <tooltip>
-                                               <Tooltip text="Right click for more options." />
-                                           </tooltip>
-                                       </JFXComboBox>
+                              <ComboBox fx:id="orderNoCombo" prefHeight="21.0" prefWidth="214.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="jobAreaCombo" prefHeight="21.0" prefWidth="207.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="jobClassCombo" prefHeight="21.0" prefWidth="209.0" GridPane.columnIndex="3" />
                                    </children>
                                </GridPane>
                            </content>
@@ -171,31 +148,31 @@
                            <content>
                                <VBox prefHeight="281.0" prefWidth="611.0">
                                    <children>
-                                       <JFXCheckBox fx:id="workDoneSats" checkedColor="#9ce1b1" text="Was work done satisfactory?" textFill="#46484a" unCheckedColor="#9fcae1">
-                                           <VBox.margin>
-                                               <Insets top="5.0" />
-                                           </VBox.margin>
-                                       </JFXCheckBox>
-                                       <JFXCheckBox fx:id="needReplacement" checkedColor="#9ce1b1" text="Does it need to be replaced?" textFill="#46484a" unCheckedColor="#9fcae1">
-                                           <VBox.margin>
-                                               <Insets top="5.0" />
-                                           </VBox.margin>
-                                       </JFXCheckBox>
-                                       <JFXCheckBox fx:id="recurringJob" checkedColor="#9ce1b1" text="Is it a recurring job?" textFill="#46484a" unCheckedColor="#9fcae1">
-                                           <VBox.margin>
-                                               <Insets top="5.0" />
-                                           </VBox.margin>
-                                       </JFXCheckBox>
-                                       <JFXCheckBox fx:id="timeSatisfactory" checkedColor="#9ce1b1" text="Was the timeframe satisfactory?" textFill="#46484a" unCheckedColor="#9fcae1">
-                                           <VBox.margin>
-                                               <Insets top="5.0" />
-                                           </VBox.margin>
-                                       </JFXCheckBox>
-                                       <JFXCheckBox fx:id="doneToSpecs" checkedColor="#9ce1b1" text="Was the work done according to expectations?" textFill="#46484a" unCheckedColor="#9fcae1">
-                                           <VBox.margin>
-                                               <Insets top="5.0" />
-                                           </VBox.margin>
-                                       </JFXCheckBox>
+                              <CheckBox fx:id="workDoneSats" mnemonicParsing="false" text="Was work done satisfactory?">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" top="5.0" />
+                                 </padding>
+                              </CheckBox>
+                              <CheckBox fx:id="needReplacement" mnemonicParsing="false" text="Does it need to be replaced?">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" />
+                                 </padding>
+                              </CheckBox>
+                              <CheckBox fx:id="recurringJob" mnemonicParsing="false" text="Is it a recurring job?">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" />
+                                 </padding>
+                              </CheckBox>
+                              <CheckBox fx:id="timeSatisfactory" mnemonicParsing="false" text="Was the timeframe satisfactory?">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" />
+                                 </padding>
+                              </CheckBox>
+                              <CheckBox fx:id="doneToSpecs" mnemonicParsing="false" text="Was the work done according to expectations?">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" />
+                                 </padding>
+                              </CheckBox>
                                        <TitledPane animated="false" text="If you did not check all the boxes above, Explain.">
                                            <VBox.margin>
                                                <Insets bottom="5.0" top="5.0" />
@@ -206,25 +183,19 @@
                                        </TitledPane>
                                        <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="589.0">
                                            <children>
-                                               <JFXButton fx:id="saveJobCardBtn" buttonType="RAISED" ripplerFill="#39c7eb" style="-fx-background-color: #FDFDFD; -fx-border-radius: 5; -fx-border-color: #057A1F; -fx-border-width: 1;" text="Save" textFill="#057a1f">
-                                                   <HBox.margin>
-                                                       <Insets right="15.0" />
-                                                   </HBox.margin>
-                                                   <cursor>
-                                                       <Cursor fx:constant="CLOSED_HAND" />
-                                                   </cursor>
+                                    <Button fx:id="saveJobCardBtn" mnemonicParsing="false" style="-fx-background-color: #FBFDFE; -fx-border-color: #196109; -fx-border-radius: 5;" text="Save" textFill="#196109">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
-                                               </JFXButton>
-                                               <JFXButton fx:id="clearJobCardBtn" buttonType="RAISED" ripplerFill="#e8a687" style="-fx-background-color: #FFFFFF; -fx-border-color: #F61106; -fx-border-radius: 5;" text="Clear" textFill="#f61106">
-                                                   <font>
-                                                       <Font name="System Bold" size="12.0" />
-                                                   </font>
-                                                   <cursor>
-                                                       <Cursor fx:constant="CLOSED_HAND" />
-                                                   </cursor>
-                                               </JFXButton>
+                                    </Button>
+                                    <Button fx:id="clearJobCardBtn" mnemonicParsing="false" style="-fx-background-color: #FDFEFD; -fx-border-radius: 5; -fx-border-color: #C70039;" text="Clear" textFill="#bf0a0a">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Button>
                                            </children>
                                        </HBox>
                                    </children>
@@ -275,33 +246,21 @@
                              </Label>
                              <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="160.0" GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.vgrow="NEVER">
                                  <children>
-                                     <JFXButton fx:id="qrSearchJobCardBtn" buttonType="RAISED" style="-fx-background-color: #FDFDFD; -fx-border-radius: 5; -fx-border-color: #057A1F; -fx-border-width: 1;" text="Search" textFill="#057a1f">
-                                         <HBox.margin>
-                                             <Insets right="10.0" />
-                                         </HBox.margin>
-                                         <font>
-                                             <Font name="System Bold" size="12.0" />
-                                         </font>
-                                         <cursor>
-                                             <Cursor fx:constant="CLOSED_HAND" />
-                                         </cursor>
-                                     </JFXButton>
-                                     <JFXButton fx:id="qrClearJobCardBtn" buttonType="RAISED" ripplerFill="#e8a687" style="-fx-background-color: #ffffff; -fx-border-color: #F61106; -fx-border-radius: 5;" text="Clear" textFill="#f61106">
-                                         <HBox.margin>
-                                             <Insets right="5.0" />
-                                         </HBox.margin>
-                                         <font>
-                                             <Font name="System Bold" size="12.0" />
-                                         </font>
-                                         <cursor>
-                                             <Cursor fx:constant="CLOSED_HAND" />
-                                         </cursor>
-                                     </JFXButton>
+                           <Button fx:id="qrSearchJobCardBtn" mnemonicParsing="false" style="-fx-border-color: #192f02; -fx-border-radius: 5; -fx-background-color: #FCFDFB;" text="Search" textFill="#366505">
+                              <HBox.margin>
+                                 <Insets right="10.0" />
+                              </HBox.margin>
+                              <font>
+                                 <Font name="System Bold" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="qrClearJobCardBtn" mnemonicParsing="false" style="-fx-background-color: #FDFEFD; -fx-border-radius: 5; -fx-border-color: #C70039;" text="Clear" textFill="#bf0a0a">
+                              <font>
+                                 <Font name="System Bold" size="12.0" />
+                              </font>
+                           </Button>
                                  </children>
                              </HBox>
-                             <JFXComboBox fx:id="qrEmployeeCombo" opacity="0.99" prefHeight="27.0" prefWidth="507.0" style="-fx-border-width: 1; -fx-border-radius: 5; -fx-border-color: #B4B8AC;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                             <JFXComboBox fx:id="qrJobClassCombo" layoutX="310.0" layoutY="36.0" opacity="0.99" prefHeight="27.0" prefWidth="507.0" style="-fx-border-width: 1; -fx-border-radius: 5; -fx-border-color: #B4B8AC;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-                             <JFXComboBox fx:id="qrWorkAreaCombo" layoutX="310.0" layoutY="36.0" opacity="0.99" prefHeight="27.0" prefWidth="506.0" style="-fx-border-width: 1; -fx-border-radius: 5; -fx-border-color: #B4B8AC;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                      <Label layoutX="31.0" layoutY="50.0" text="Job Card No">
                         <GridPane.margin>
                            <Insets left="10.0" />
@@ -324,6 +283,9 @@
                         </GridPane.margin>
                      </HBox>
                      <HBox fx:id="toDateHBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                     <ComboBox fx:id="qrEmployeeCombo" prefHeight="22.0" prefWidth="342.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                     <ComboBox fx:id="qrJobClassCombo" prefHeight="21.0" prefWidth="341.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                     <ComboBox fx:id="qrWorkAreaCombo" prefHeight="21.0" prefWidth="346.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                          </children>
                      </GridPane>
                  </content>

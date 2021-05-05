@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jvmtechs</groupId>
@@ -9,60 +10,14 @@
     <name>SeaNam Tasks Manager</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>11</maven.compiler.release>
-        <javafx.version>16</javafx.version>
-        <attach.version>4.0.11</attach.version>
-        <client.plugin.version>0.1.39</client.plugin.version>
-        <javafx.plugin.version>0.0.5</javafx.plugin.version>
         <mainClassName>com.jvmtechs.SeaNamJoCardManager</mainClassName>
         <kotlin.version>1.4.32</kotlin.version>
         <tornadofx.version>1.7.20</tornadofx.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.maven.plugin.version>0.0.6</javafx.maven.plugin.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>16</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.gluonhq</groupId>
-            <artifactId>charm-glisten</artifactId>
-            <version>6.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gluonhq.attach</groupId>
-            <artifactId>display</artifactId>
-            <version>${attach.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gluonhq.attach</groupId>
-            <artifactId>lifecycle</artifactId>
-            <version>${attach.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gluonhq.attach</groupId>
-            <artifactId>statusbar</artifactId>
-            <version>${attach.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gluonhq.attach</groupId>
-            <artifactId>storage</artifactId>
-            <version>${attach.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gluonhq.attach</groupId>
-            <artifactId>util</artifactId>
-            <version>${attach.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-coroutines-core</artifactId>
@@ -97,63 +52,41 @@
             <version>5.4.1.Final</version>
         </dependency>
         <!-- Thanks for using https://jar-download.com -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.4.27.Final</version>
+            <version>5.4.31.Final</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>8.40.18</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jfxtras/jfxtras-controls -->
+        <dependency>
+            <groupId>org.jfxtras</groupId>
+            <artifactId>jfxtras-controls</artifactId>
+            <version>8.0-r6</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.2.Final</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.fazecast/jSerialComm -->
-        <dependency>
-            <groupId>com.fazecast</groupId>
-            <artifactId>jSerialComm</artifactId>
-            <version>2.6.1</version>
-        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.jfxtras/jmetro -->
         <dependency>
             <groupId>org.jfxtras</groupId>
             <artifactId>jmetro</artifactId>
             <version>11.6.12</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/de.jensd/fontawesomefx -->
-        <dependency>
-            <groupId>de.jensd</groupId>
-            <artifactId>fontawesomefx-commons</artifactId>
-            <version>9.1.2</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/de.jensd/fontawesomefx-fontawesome -->
-        <dependency>
-            <groupId>de.jensd</groupId>
-            <artifactId>fontawesomefx-fontawesome</artifactId>
-            <version>4.7.0-9.1.2</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
-        <dependency>
-            <groupId>org.controlsfx</groupId>
-            <artifactId>controlsfx</artifactId>
-            <version>11.1.0</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.jfoenix/jfoenix -->
-        <dependency>
-            <groupId>com.jfoenix</groupId>
-            <artifactId>jfoenix</artifactId>
-            <version>9.0.10</version>
-        </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>Gluon</id>
-            <url>https://nexus.gluonhq.com/nexus/content/repositories/releases</url>
-        </repository>
-    </repositories>
-
     <build>
+        <sourceDirectory>src/main/kotlin</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -162,7 +95,7 @@
                 <executions>
                     <execution>
                         <id>compile</id>
-                        <phase>process-sources</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
@@ -183,84 +116,36 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>${javafx.plugin.version}</version>
                 <configuration>
-                    <mainClass>${mainClassName}</mainClass>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
-
             <plugin>
-                <groupId>com.gluonhq</groupId>
-                <artifactId>client-maven-plugin</artifactId>
-                <version>${client.plugin.version}</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
                 <configuration>
-                    <target>${client.target}</target>
-                    <attachList>
-                        <list>display</list>
-                        <list>lifecycle</list>
-                        <list>statusbar</list>
-                        <list>storage</list>
-                    </attachList>
-                    <bundlesList>
-                        <list>com.jvmtechs.views.primary</list>
-                        <list>com.jvmtechs.views.secondary</list>
-                    </bundlesList>
-                    <reflectionList>
-                        <list>com.jvmtechs.views.PrimaryPresenter</list>
-                        <list>com.jvmtechs.views.SecondaryPresenter</list>
-                    </reflectionList>
-                    <mainClass>${mainClassName}</mainClass>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.jvmtechs.app.SeaNamJobCardApp</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>assemble-all</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>desktop</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <client.target>host</client.target>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>com.gluonhq.attach</groupId>
-                    <artifactId>display</artifactId>
-                    <version>${attach.version}</version>
-                    <classifier>desktop</classifier>
-                </dependency>
-                <dependency>
-                    <groupId>com.gluonhq.attach</groupId>
-                    <artifactId>lifecycle</artifactId>
-                    <version>${attach.version}</version>
-                    <classifier>desktop</classifier>
-                </dependency>
-                <dependency>
-                    <groupId>com.gluonhq.attach</groupId>
-                    <artifactId>storage</artifactId>
-                    <version>${attach.version}</version>
-                    <classifier>desktop</classifier>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>ios</id>
-            <properties>
-                <client.target>ios</client.target>
-            </properties>
-        </profile>
-        <profile>
-            <id>android</id>
-            <properties>
-                <client.target>android</client.target>
-            </properties>
-        </profile>
-    </profiles>
 </project>

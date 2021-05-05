@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SeaNam Tasks Manager.iml" filepath="$PROJECT_DIR$/SeaNam Tasks Manager.iml" />
       <module fileurl="file://$PROJECT_DIR$/seanam-tasks-manager.iml" filepath="$PROJECT_DIR$/seanam-tasks-manager.iml" />
     </modules>
   </component>
