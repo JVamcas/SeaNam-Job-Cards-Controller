@@ -1,13 +1,17 @@
 package com.jvmtechs.model
 
+import com.jvmtechs.utils.SimpleBooleanConvertor
 import com.jvmtechs.utils.SimpleStringConvertor
+import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
+import tornadofx.*
 import javax.persistence.*
 
 @Entity
 @Table(name = "WorkArea")
 class WorkArea(
-    areaName: String? = null
+    areaName: String? = null,
+    deleted: Boolean = false
 ) {
 
     @Id
@@ -18,4 +22,11 @@ class WorkArea(
     @Convert(converter = SimpleStringConvertor::class)
     val areaNameProperty = SimpleStringProperty(areaName)
 
+    @Column(name = "deleted", nullable = false)
+    @Convert(converter = SimpleBooleanConvertor::class)
+    val deletedProperty = SimpleBooleanProperty(deleted)
+
+}
+class WorkAreaModel : ItemViewModel<WorkArea>() {
+    var areaName = bind(WorkArea::areaNameProperty)
 }

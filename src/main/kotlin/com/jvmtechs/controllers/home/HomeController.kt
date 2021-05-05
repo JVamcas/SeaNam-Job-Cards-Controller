@@ -1,27 +1,24 @@
 package com.jvmtechs.controllers.home
 
-import com.jfoenix.controls.JFXButton
-import com.jfoenix.controls.JFXCheckBox
-import com.jfoenix.controls.JFXComboBox
 import com.jvmtechs.controllers.AbstractModelTableController
+import com.jvmtechs.controllers.jobcard.JobClassTableController
+import com.jvmtechs.controllers.jobcard.WorkAreaTableController
 import com.jvmtechs.model.*
+import com.jvmtechs.repos.JobCardRepo
+import com.jvmtechs.repos.JobTitleRepo
 import com.jvmtechs.repos.UserRepo
 import com.jvmtechs.utils.DateTimePicker
 import com.jvmtechs.utils.Results
 import com.jvmtechs.utils.cell.ComboBoxEditingCell
 import com.jvmtechs.utils.cell.DateEditingCell
 import javafx.collections.ObservableList
-import javafx.geometry.Pos
 import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.HBox
 import javafx.scene.text.Text
-import jfxtras.scene.control.LocalDateTimePicker
-import jfxtras.scene.control.LocalDateTimeTextField
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tornadofx.*
-
 
 
 class HomeController : AbstractModelTableController<JobCard>("") {
@@ -32,7 +29,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     private val startDateHBox: HBox by fxid("startTimeHbox")
     private val endTimeHBox: HBox by fxid("endTimeHbox")
     private val jobClassCombo: ComboBox<JobClass> by fxid("jobClassCombo")
-    private val orderNoCombo: ComboBox<OrderNumber> by fxid("orderNoCombo")
+    private val orderNoMenuBtn: MenuButton by fxid("orderNoMenuBtn")
     private val jobAreaCombo: ComboBox<WorkArea> by fxid("jobAreaCombo")
     private val jobCardNo: TextField by fxid("jobCardNo")
     private val jobDescription: TextArea by fxid("jobDescription")
@@ -61,7 +58,13 @@ class HomeController : AbstractModelTableController<JobCard>("") {
 
     private lateinit var tableView: TableView<JobCard>
 
+    private val jobCardModel = JobCardModel()
+    val jobCardRepo = JobCardRepo()
+
     init {
+
+        jobCardModel.item = JobCard()
+
         root.apply {
 
 
@@ -100,10 +103,28 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             jobClassCombo.apply {
-
+//                tooltip = Tooltip("Select job class.")
+//                bindCombo(.jobTitle)
+//                GlobalScope.launch {
+//                    val loadResults = JobTitleRepo().loadAll()
+//                    val titles = if (loadResults is Results.Success<*>)
+//                        loadResults.data as ObservableList<JobTitle>
+//                    else observableListOf()
+//                    items = titles
+//                }
             }
-            orderNoCombo.apply {
+            orderNoMenuBtn.apply {
+                enableWhen { jobCardModel.dirty }
+                item("New") {
+                    action {
 
+                    }
+                }
+                item("View") {
+                    action {
+
+                    }
+                }
             }
 
             jobAreaCombo.apply {
@@ -142,6 +163,11 @@ class HomeController : AbstractModelTableController<JobCard>("") {
 //                        fill = c("#FFFFFF")
 //                    }
 //                }
+            }
+
+            contextmenu {
+                item("Work Areas") { action { find(WorkAreaTableController::class).openModal() } }
+                item("Job Class") {action { find(JobClassTableController::class).openModal() }}
             }
 
             /** End of [JobCardQuery] view init **/

@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableArray
 import javafx.collections.ObservableList
+import tornadofx.*
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -138,4 +139,8 @@ class JobCard(
     @Column(name = "other_explanation")
     @Convert(converter = SimpleStringConvertor::class)
     val otherExplanationProperty = SimpleStringProperty(otherExplanation)
+}
+
+class JobCardModel: ItemViewModel<JobCard>(){
+
 }
