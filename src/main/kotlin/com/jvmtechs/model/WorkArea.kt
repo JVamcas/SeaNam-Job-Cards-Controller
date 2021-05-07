@@ -26,6 +26,8 @@ class WorkArea(
     @Convert(converter = SimpleBooleanConvertor::class)
     val deletedProperty = SimpleBooleanProperty(deleted)
 
+    override fun toString():String = areaNameProperty.get()
+
 }
 class WorkAreaModel : ItemViewModel<WorkArea>() {
     var areaName = bind(WorkArea::areaNameProperty)

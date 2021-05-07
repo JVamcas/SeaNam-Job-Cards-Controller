@@ -196,6 +196,9 @@
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </Button>
                                     <Button fx:id="clearJobCardBtn" mnemonicParsing="false" style="-fx-background-color: #FDFEFD; -fx-border-radius: 5; -fx-border-color: #C70039;" text="Clear" textFill="#bf0a0a">
                                        <HBox.margin>
@@ -204,6 +207,9 @@
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </Button>
                                            </children>
                                        </HBox>
@@ -262,11 +268,17 @@
                               <font>
                                  <Font name="System Bold" size="12.0" />
                               </font>
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
                            </Button>
                            <Button fx:id="qrClearJobCardBtn" mnemonicParsing="false" style="-fx-background-color: #FDFEFD; -fx-border-radius: 5; -fx-border-color: #C70039;" text="Clear" textFill="#bf0a0a">
                               <font>
                                  <Font name="System Bold" size="12.0" />
                               </font>
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
                            </Button>
                                  </children>
                              </HBox>

@@ -109,5 +109,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.openjfx:javafx-base:win:11.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.openjfx:javafx-graphics:win:11.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.openjfx:javafx-base:11.0.2" level="project" />
+    <orderEntry type="library" name="Maven: de.jensd:fontawesomefx:8.4" level="project" />
   </component>
 </module>

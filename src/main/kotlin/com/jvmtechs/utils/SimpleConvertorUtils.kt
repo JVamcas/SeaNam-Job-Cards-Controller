@@ -4,6 +4,8 @@ package com.jvmtechs.utils
 import javafx.beans.property.*
 import java.sql.Driver
 import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.persistence.AttributeConverter
 
 class SimpleStringConvertor : AttributeConverter<SimpleStringProperty, String> {
@@ -96,12 +98,25 @@ class SimpleBooleanConvertor : AttributeConverter<SimpleBooleanProperty, Boolean
 //    }
 //}
 //
-class SimpleDateConvertor : AttributeConverter<SimpleObjectProperty<Timestamp>, Timestamp> {
-    override fun convertToDatabaseColumn(p0: SimpleObjectProperty<Timestamp>): Timestamp {
+
+
+class SimpleDateConvertor : AttributeConverter<SimpleObjectProperty<Timestamp?>, Timestamp?> {
+    override fun convertToDatabaseColumn(p0: SimpleObjectProperty<Timestamp?>): Timestamp? {
         return p0.get()
     }
 
-    override fun convertToEntityAttribute(p0: Timestamp): SimpleObjectProperty<Timestamp> {
+    override fun convertToEntityAttribute(p0: Timestamp?): SimpleObjectProperty<Timestamp?> {
         return SimpleObjectProperty(p0)
     }
 }
+
+class SimpleLocalDateTimeConvertor : AttributeConverter<SimpleObjectProperty<LocalDateTime?>, LocalDateTime?> {
+    override fun convertToDatabaseColumn(p0: SimpleObjectProperty<LocalDateTime?>): LocalDateTime? {
+        return p0.get()
+    }
+
+    override fun convertToEntityAttribute(p0: LocalDateTime?): SimpleObjectProperty<LocalDateTime?> {
+        return SimpleObjectProperty(p0)
+    }
+}
+

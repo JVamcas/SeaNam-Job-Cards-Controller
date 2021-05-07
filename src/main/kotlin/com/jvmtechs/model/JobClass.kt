@@ -31,6 +31,9 @@ class JobClass(
     @Convert(converter = SimpleBooleanConvertor::class)
     val deletedProperty = SimpleBooleanProperty(deleted)
 
+    override fun toString(): String {
+        return "${classNoProperty.get()} - ${classNameProperty.get()}"
+    }
 }
 
 class JobClassModel: ItemViewModel<JobClass>(){

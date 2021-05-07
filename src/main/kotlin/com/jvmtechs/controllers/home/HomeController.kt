@@ -4,13 +4,17 @@ import com.jvmtechs.controllers.AbstractModelTableController
 import com.jvmtechs.controllers.jobcard.JobClassTableController
 import com.jvmtechs.controllers.jobcard.WorkAreaTableController
 import com.jvmtechs.model.*
-import com.jvmtechs.repos.JobCardRepo
-import com.jvmtechs.repos.JobTitleRepo
-import com.jvmtechs.repos.UserRepo
+import com.jvmtechs.repos.*
 import com.jvmtechs.utils.DateTimePicker
+import com.jvmtechs.utils.DateUtil
+import com.jvmtechs.utils.ParseUtil.Companion.generalTxtFieldValidation
+import com.jvmtechs.utils.ParseUtil.Companion.isOldId
+import com.jvmtechs.utils.ParseUtil.Companion.numberValidation
+import com.jvmtechs.utils.ParseUtil.Companion.pickerBind
 import com.jvmtechs.utils.Results
-import com.jvmtechs.utils.cell.ComboBoxEditingCell
-import com.jvmtechs.utils.cell.DateEditingCell
+import com.jvmtechs.utils.TMDateTimePicker
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView
 import javafx.collections.ObservableList
 import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
@@ -59,19 +63,35 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     private lateinit var tableView: TableView<JobCard>
 
     private val jobCardModel = JobCardModel()
-    val jobCardRepo = JobCardRepo()
+    private val repo = JobCardRepo()
 
     init {
 
-        jobCardModel.item = JobCard()
+        jobCardModel.item = JobCard(employee = Account.currentUser.get())
 
         root.apply {
+            /** Start of [JobCard] view init **/
 
+            workDoneSats.apply {
+                bind(jobCardModel.isWorkDoneSats)
+            }
+            needReplacement.apply {
+                bind(jobCardModel.isNeedReplacement)
+            }
+            recurringJob.apply {
+                bind(jobCardModel.isRecurring)
+            }
+            timeSatisfactory.apply {
+                bind(jobCardModel.isTimeFrameSatisfactory)
+            }
+            doneToSpecs.apply {
+                bind(jobCardModel.isJobDoneToExpectations)
+            }
 
             startDateHBox.let { container ->
-
                 container.children.add(
-                    DateTimePicker().apply {
+                    TMDateTimePicker().apply {
+                        jobCardModel.startDate.pickerBind(dateTimeValue)
                         prefWidthProperty().bind(container.prefWidthProperty())
                         minWidthProperty().bind(container.minWidthProperty())
                     })
@@ -79,12 +99,102 @@ class HomeController : AbstractModelTableController<JobCard>("") {
 
             endTimeHBox.let { container ->
                 container.children.add(
-                    DateTimePicker().apply {
+                    TMDateTimePicker().apply {
+                        jobCardModel.endDate.pickerBind(dateTimeValue)
                         prefWidthProperty().bind(container.prefWidthProperty())
                         minWidthProperty().bind(container.minWidthProperty())
                     })
             }
 
+            jobCardNo.apply {
+                bind(jobCardModel.jobCardNo)
+                numberValidation("Please enter a valid job card no.")
+            }
+            jobDescription.apply {
+                bind(jobCardModel.jobDescription)
+                generalTxtFieldValidation("Enter at least 20 characters.", 20)
+            }
+            otherExplanations.apply {
+                bind(jobCardModel.otherExplanation)
+            }
+
+            jobClassCombo.apply {
+                tooltip = Tooltip("Select job class.")
+                bindCombo(jobCardModel.jobClass)
+                GlobalScope.launch {
+                    val loadResults = JobClassRepo().loadAll()
+                    val classList = if (loadResults is Results.Success<*>)
+                        loadResults.data as ObservableList<JobClass>
+                    else observableListOf()
+                    items = classList
+                }
+            }
+            orderNoMenuBtn.apply {
+                item("New") {
+                    action {
+
+                    }
+                }
+                label("")
+                item("View") {
+                    action {
+
+                    }
+                }
+            }
+
+            jobAreaCombo.apply {
+                tooltip = Tooltip("Select work area.")
+                bindCombo(jobCardModel.workArea)
+                GlobalScope.launch {
+                    val loadResults = WorkAreaRepo().loadAll()
+                    val areaList = if (loadResults is Results.Success<*>)
+                        loadResults.data as ObservableList<WorkArea>
+                    else observableListOf()
+                    items = areaList
+                }
+            }
+
+            saveJobCardBtn.apply {
+                enableWhen { jobCardModel.dirty }
+                graphic = FontAwesomeIconView(FontAwesomeIcon.SAVE).apply {
+                    style {
+                        fill = c("#109865")
+                    }
+                }
+                action {
+                    jobCardModel.commit()
+                    GlobalScope.launch {
+                        val jobCard = jobCardModel.item
+                        jobCard.createDateProperty.set(DateUtil.today())
+                        val results =
+                            if (jobCard.id.isOldId()) repo.updateModel(model = jobCard) else repo.addNewModel(
+                                jobCard
+                            )
+                        if (results is Results.Success<*>) {
+                            jobCardModel.item = JobCard(employee = Account.currentUser.get())
+                            onRefresh()
+                            return@launch
+                        }
+                        parseResults(results)
+                    }
+                }
+            }
+
+            clearJobCardBtn.apply {
+                graphic = FontAwesomeIconView(FontAwesomeIcon.CLOSE).apply {
+                    style {
+                        fill = c("#F50A43")
+                    }
+                }
+                action {
+                    jobCardModel.item = JobCard(employee = Account.currentUser.get())
+                }
+            }
+
+            /** End of [JobCard] view init **/
+
+            /** Start of [JobCardQuery] view init **/
             fromDateHBox.let { container ->
                 container.children.add(
                     DateTimePicker().apply {
@@ -101,73 +211,25 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                         minWidthProperty().bind(container.minWidthProperty())
                     })
             }
-
-            jobClassCombo.apply {
-//                tooltip = Tooltip("Select job class.")
-//                bindCombo(.jobTitle)
-//                GlobalScope.launch {
-//                    val loadResults = JobTitleRepo().loadAll()
-//                    val titles = if (loadResults is Results.Success<*>)
-//                        loadResults.data as ObservableList<JobTitle>
-//                    else observableListOf()
-//                    items = titles
-//                }
-            }
-            orderNoMenuBtn.apply {
-                enableWhen { jobCardModel.dirty }
-                item("New") {
-                    action {
-
-                    }
-                }
-                item("View") {
-                    action {
-
-                    }
-                }
-            }
-
-            jobAreaCombo.apply {
-
-            }
-
-            /** Start of [JobCard] view init **/
-
-            saveJobCardBtn.apply {
-
-            }
-
-            clearJobCardBtn.apply {
-//                graphic = FontAwesomeIconView(FontAwesomeIcon.CLOSE).apply {
-//                    style {
-//                        fill = c("#FFFFFF")
-//                    }
-//                }
-            }
-
-            /** End of [JobCard] view init **/
-
-            /** Start of [JobCardQuery] view init **/
-
             qrSearchJobCardBtn.apply {
-//                graphic = FontAwesomeIconView(FontAwesomeIcon.SEARCH).apply {
-//                    style {
-//                        fill = c("#FFFFFF")
-//                    }
-//                }
+                graphic = FontAwesomeIconView(FontAwesomeIcon.SEARCH).apply {
+                    style {
+                        fill = c("#109865")
+                    }
+                }
             }
 
             qrClearJobCardBtn.apply {
-//                graphic = FontAwesomeIconView(FontAwesomeIcon.CLOSE).apply {
-//                    style {
-//                        fill = c("#FFFFFF")
-//                    }
-//                }
+                graphic = FontAwesomeIconView(FontAwesomeIcon.CLOSE).apply {
+                    style {
+                        fill = c("#b9162d")
+                    }
+                }
             }
 
             contextmenu {
                 item("Work Areas") { action { find(WorkAreaTableController::class).openModal() } }
-                item("Job Class") {action { find(JobClassTableController::class).openModal() }}
+                item("Job Class") { action { find(JobClassTableController::class).openModal() } }
             }
 
             /** End of [JobCardQuery] view init **/
@@ -185,7 +247,6 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                     columns.add(indexColumn)
                     column("Date Created", JobCard::createDateProperty) {
                         contentWidth(padding = 10.0, useAsMin = true)
-                        setCellFactory { DateEditingCell<JobCard>() }
                     }
                     column("Job Card No", JobCard::jobCardNoProperty) {
                         contentWidth(padding = 10.0, useAsMin = true)
@@ -212,16 +273,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                     }
                     column("Employee", JobCard::employee).apply {
                         contentWidth(padding = 20.0, useAsMin = true)
-                        GlobalScope.launch {
-                            val loadResults = UserRepo().loadAll()
-                            setCellFactory {
-                                val employees = if (loadResults is Results.Success<*>)
-                                    loadResults.data as ObservableList<User>
-                                else observableListOf()
 
-                                ComboBoxEditingCell(employees)
-                            }
-                        }
                     }
 
                     column("Done Satisfactory", JobCard::isWorkDoneSatisfactoryProperty) {
@@ -248,6 +300,9 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                             cell
                         }
                     }
+                    onUserSelect {
+                        jobCardModel.item = it
+                    }
                 }
             }
         }
@@ -259,6 +314,24 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     }
 
     override suspend fun loadModels(): ObservableList<JobCard> {
+        val loadResults = repo.loadAll()
+        if (loadResults is Results.Success<*>)
+            return loadResults.data as ObservableList<JobCard>
         return observableListOf()
+    }
+
+    override fun onDelete() {
+        super.onDelete()
+        GlobalScope.launch {
+            if (jobCardModel.item.id.isOldId()) {
+                val delResults = repo.deleteJobCard(jobCardModel.item)
+                if (delResults is Results.Error)
+                    parseResults(delResults)
+                else {
+                    jobCardModel.item = JobCard()
+                    onRefresh()
+                }
+            }
+        }
     }
 }

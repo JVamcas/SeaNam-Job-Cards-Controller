@@ -11,14 +11,12 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
+class TMDateTimePicker : DatePicker() {
 
-/**
- * A DateTimePicker with configurable datetime format where both date and time can be changed
- * via the text field and the date can additionally be changed via the JavaFX default date picker.
- */
-class DateTimePicker : DatePicker() {
     private var formatter: DateTimeFormatter? = null
-    val dateTimeValue: ObjectProperty<LocalDateTime?> = SimpleObjectProperty()
+    val dateTimeValue = SimpleObjectProperty<LocalDateTime?>()
+    val timestampValue = SimpleObjectProperty<Timestamp?>()
+
     private val format: ObjectProperty<String> = object : SimpleObjectProperty<String>() {
         override fun set(newValue: String) {
             super.set(newValue)
@@ -68,6 +66,7 @@ class DateTimePicker : DatePicker() {
         override fun fromString(value: String): LocalDate? {
             if (value.isEmpty()) {
                 dateTimeValue.set(null)
+                timestampValue.set(null)
                 return null
             }
             dateTimeValue.set(LocalDateTime.parse(value, formatter))
@@ -89,12 +88,15 @@ class DateTimePicker : DatePicker() {
         valueProperty().addListener { _: ObservableValue<out LocalDate?>?, _: LocalDate?, newValue: LocalDate? ->
             if (newValue == null) {
                 dateTimeValue.set(null)
+                timestampValue.set(null)
             } else {
                 if (dateTimeValue.get() == null) {
                     dateTimeValue.set(LocalDateTime.of(newValue, LocalTime.now()))
+                    timestampValue.set(Timestamp.valueOf(dateTimeValue.get()))
                 } else {
                     val time = dateTimeValue.get()!!.toLocalTime()
                     dateTimeValue.set(LocalDateTime.of(newValue, time))
+                    timestampValue.set(Timestamp.valueOf(dateTimeValue.get()))
                 }
             }
         }

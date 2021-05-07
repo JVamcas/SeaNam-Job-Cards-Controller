@@ -2,13 +2,11 @@ package com.jvmtechs.model
 
 import com.jvmtechs.utils.SimpleBooleanConvertor
 import com.jvmtechs.utils.SimpleDateConvertor
+import com.jvmtechs.utils.SimpleLocalDateTimeConvertor
 import com.jvmtechs.utils.SimpleStringConvertor
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
-import javafx.collections.FXCollections
-import javafx.collections.ObservableArray
-import javafx.collections.ObservableList
 import tornadofx.*
 import java.sql.Timestamp
 import java.time.LocalDateTime
@@ -57,7 +55,7 @@ class JobCard(
     val workAreaProperty = SimpleObjectProperty(workArea)
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="work_area_id")
+    @JoinColumn(name = "work_area_id")
     var workArea: WorkArea? = null
         set(value) {
             field = value
@@ -68,7 +66,7 @@ class JobCard(
     val supervisorProperty = SimpleObjectProperty(supervisor)
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="supervisor_id")
+    @JoinColumn(name = "supervisor_id")
     var supervisor: User? = null
         set(value) {
             field = value
@@ -79,7 +77,7 @@ class JobCard(
     val employeeProperty = SimpleObjectProperty(employee)
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="employee_id")
+    @JoinColumn(name = "employee_id")
     var employee: User? = null
         set(value) {
             field = value
@@ -90,31 +88,28 @@ class JobCard(
     val jobClassProperty = SimpleObjectProperty(jobClass)
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="job_class_id")
+    @JoinColumn(name = "job_class_id")
     var jobClass: JobClass? = null
         set(value) {
             field = value
             jobClassProperty.set(value)
         }
 
-
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name="job_card_id")
-    @Convert(converter = SimpleDateConvertor::class)
+    @JoinColumn(name = "job_card_id")
     val orderList = listOf<OrderNumber>()
-
 
     @Column(name = "create_date", nullable = true)
     @Convert(converter = SimpleDateConvertor::class)
-    val createDateProperty = SimpleObjectProperty(createDate)
+    val createDateProperty = SimpleObjectProperty<Timestamp>(createDate)
 
     @Column(name = "start_date", nullable = true)
     @Convert(converter = SimpleDateConvertor::class)
-    val startDateProperty = SimpleObjectProperty(startDate)
+    val startDateProperty = SimpleObjectProperty<Timestamp>(startDate)
 
     @Column(name = "end_date", nullable = false)
     @Convert(converter = SimpleDateConvertor::class)
-    val endDateProperty = SimpleObjectProperty(endDate)
+    val endDateProperty = SimpleObjectProperty<Timestamp>(endDate)
 
     @Column(name = "is_Work_Done_Satisfactory", nullable = false)
     @Convert(converter = SimpleBooleanConvertor::class)
@@ -141,6 +136,21 @@ class JobCard(
     val otherExplanationProperty = SimpleStringProperty(otherExplanation)
 }
 
-class JobCardModel: ItemViewModel<JobCard>(){
+class JobCardModel : ItemViewModel<JobCard>() {
 
+    val jobCardNo = bind(JobCard::jobCardNoProperty)
+    val jobDescription = bind(JobCard::jobDescriptionProperty)
+    val workArea = bind(JobCard::workArea)
+    val supervisor = bind(JobCard::supervisor)
+    val employee = bind(JobCard::employee)
+    val jobClass = bind(JobCard::jobClass)
+    val createDate = bind(JobCard::createDateProperty)
+    val startDate = bind(JobCard::startDateProperty)
+    val endDate = bind(JobCard::endDateProperty)
+    val isWorkDoneSats = bind(JobCard::isWorkDoneSatisfactoryProperty)
+    val isNeedReplacement = bind(JobCard::isNeedReplacementProperty)
+    val isRecurring = bind(JobCard::isRecurringJobProperty)
+    val isTimeFrameSatisfactory = bind(JobCard::isTimeFrameSatisfactoryProperty)
+    val isJobDoneToExpectations = bind(JobCard::isJobDoneToExpectationsProperty)
+    val otherExplanation = bind(JobCard::otherExplanationProperty)
 }

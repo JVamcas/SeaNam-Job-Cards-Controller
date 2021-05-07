@@ -13,7 +13,7 @@ abstract class AbstractRepo<T> {
     val sessionFactory by lazy { SessionManager.newInstance }
 
     open suspend fun addNewModel(model: T): Results {
-        var session: Session? = null;
+        var session: Session? = null
         return try {
             withContext(Dispatchers.Default) {
                 session = sessionFactory!!.withOptions()
