@@ -1,7 +1,6 @@
 package com.jvmtechs.repos
 
 import com.jvmtechs.model.JobCard
-import com.jvmtechs.model.User
 import com.jvmtechs.utils.Results
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

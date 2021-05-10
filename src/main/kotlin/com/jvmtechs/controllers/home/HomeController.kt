@@ -15,6 +15,7 @@ import com.jvmtechs.utils.Results
 import com.jvmtechs.utils.TMDateTimePicker
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView
+import javafx.application.Platform
 import javafx.collections.ObservableList
 import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
@@ -67,7 +68,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
 
     init {
 
-        jobCardModel.item = JobCard(employee = Account.currentUser.get())
+        jobCardModel.item = JobCard()
 
         root.apply {
             /** Start of [JobCard] view init **/
@@ -122,11 +123,12 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                 tooltip = Tooltip("Select job class.")
                 bindCombo(jobCardModel.jobClass)
                 GlobalScope.launch {
-                    val loadResults = JobClassRepo().loadAll()
-                    val classList = if (loadResults is Results.Success<*>)
-                        loadResults.data as ObservableList<JobClass>
-                    else observableListOf()
-                    items = classList
+                    setJobClass()
+                }
+                setOnMouseClicked {
+                    GlobalScope.launch {
+                        setJobClass()
+                    }
                 }
             }
             orderNoMenuBtn.apply {
@@ -147,11 +149,12 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                 tooltip = Tooltip("Select work area.")
                 bindCombo(jobCardModel.workArea)
                 GlobalScope.launch {
-                    val loadResults = WorkAreaRepo().loadAll()
-                    val areaList = if (loadResults is Results.Success<*>)
-                        loadResults.data as ObservableList<WorkArea>
-                    else observableListOf()
-                    items = areaList
+                    setWorkArea()
+                }
+                setOnMouseClicked {
+                    GlobalScope.launch {
+                        setWorkArea()
+                    }
                 }
             }
 
@@ -165,7 +168,10 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                 action {
                     jobCardModel.commit()
                     GlobalScope.launch {
-                        val jobCard = jobCardModel.item
+                        val jobCard = jobCardModel.item.also {
+                            it.createDateProperty.set(DateUtil.today())
+                            it.employee = Account.currentUser.get()
+                        }
                         jobCard.createDateProperty.set(DateUtil.today())
                         val results =
                             if (jobCard.id.isOldId()) repo.updateModel(model = jobCard) else repo.addNewModel(
@@ -239,16 +245,21 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                 tableView = tableview(modelList) {
 
                     columnResizePolicy = TableView.UNCONSTRAINED_RESIZE_POLICY
-//                    smartResize()
                     items = modelList
 
                     placeholder = label("No Job Cards here yet.")
 
                     columns.add(indexColumn)
-                    column("Date Created", JobCard::createDateProperty) {
+                    column("Job Card No", JobCard::jobCardNoProperty) {
                         contentWidth(padding = 10.0, useAsMin = true)
                     }
-                    column("Job Card No", JobCard::jobCardNoProperty) {
+                    column("Create Date", JobCard::createDateProperty) {
+                        contentWidth(padding = 10.0, useAsMin = true)
+                    }
+                    column("Start Date", JobCard::startDateProperty) {
+                        contentWidth(padding = 10.0, useAsMin = true)
+                    }
+                    column("End Date", JobCard::endDateProperty) {
                         contentWidth(padding = 10.0, useAsMin = true)
                     }
                     column("Work Area", JobCard::workArea) {
@@ -311,6 +322,8 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     override fun onDock() {
         super.onDock()
         currentStage?.scene?.stylesheets?.add("style/style.css")
+        disableSave()
+        disableCreate()
     }
 
     override suspend fun loadModels(): ObservableList<JobCard> {
@@ -332,6 +345,26 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                     onRefresh()
                 }
             }
+        }
+    }
+
+    private suspend fun setWorkArea() {
+        val loadResults = WorkAreaRepo().loadAll()
+        Platform.runLater {
+            jobAreaCombo.items =
+                if (loadResults is Results.Success<*>)
+                    loadResults.data as ObservableList<WorkArea>
+                else observableListOf()
+        }
+    }
+
+    private suspend fun setJobClass() {
+        val loadResults = JobClassRepo().loadAll()
+        Platform.runLater {
+            jobClassCombo.items =
+                if (loadResults is Results.Success<*>)
+                    loadResults.data as ObservableList<JobClass>
+                else observableListOf()
         }
     }
 }
