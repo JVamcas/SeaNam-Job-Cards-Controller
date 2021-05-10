@@ -1,6 +1,7 @@
 package com.jvmtechs.controllers.home
 
 import com.jvmtechs.controllers.AbstractModelTableController
+import com.jvmtechs.controllers.jobcard.JobCardOrderNoTableController
 import com.jvmtechs.controllers.jobcard.JobClassTableController
 import com.jvmtechs.controllers.jobcard.WorkAreaTableController
 import com.jvmtechs.model.*
@@ -34,7 +35,6 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     private val startDateHBox: HBox by fxid("startTimeHbox")
     private val endTimeHBox: HBox by fxid("endTimeHbox")
     private val jobClassCombo: ComboBox<JobClass> by fxid("jobClassCombo")
-    private val orderNoMenuBtn: MenuButton by fxid("orderNoMenuBtn")
     private val jobAreaCombo: ComboBox<WorkArea> by fxid("jobAreaCombo")
     private val jobCardNo: TextField by fxid("jobCardNo")
     private val jobDescription: TextArea by fxid("jobDescription")
@@ -46,6 +46,9 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     private val doneToSpecs: CheckBox by fxid("doneToSpecs")
     private val saveJobCardBtn: Button by fxid("saveJobCardBtn")
     private val clearJobCardBtn: Button by fxid("clearJobCardBtn")
+    private val jobTypeCombo: ComboBox<String> by fxid("jobTypeCombo")
+    private val orderNoBtn: Button by fxid("orderNoBtn")
+
 
     /** End of [JobCard]**/
 
@@ -76,6 +79,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             workDoneSats.apply {
                 bind(jobCardModel.isWorkDoneSats)
             }
+
             needReplacement.apply {
                 bind(jobCardModel.isNeedReplacement)
             }
@@ -131,19 +135,13 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                     }
                 }
             }
-            orderNoMenuBtn.apply {
-                item("New") {
-                    action {
-
-                    }
-                }
-                label("")
-                item("View") {
-                    action {
-
-                    }
-                }
+            jobTypeCombo.apply {
+                tooltip = Tooltip("Select the type for this job.")
+                bindCombo(jobCardModel.jobType)
+                items = JobType.values().map { it.name }.toObservable()
             }
+
+            orderNoBtn.apply { action { find(JobCardOrderNoTableController::class).openModal() } }
 
             jobAreaCombo.apply {
                 tooltip = Tooltip("Select work area.")

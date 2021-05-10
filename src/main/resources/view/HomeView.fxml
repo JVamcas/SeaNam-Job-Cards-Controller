@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="903.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="903.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <left>
        <VBox prefHeight="928.0" prefWidth="645.0" style="-fx-border-width: 2; -fx-border-color: #094F99;" BorderPane.alignment="CENTER">
            <TitledPane alignment="CENTER" contentDisplay="TOP" text="Add/ Edit Job Card" textFill="#0861b5">
@@ -27,7 +40,7 @@
                    <children>
                        <TitledPane collapsible="false" prefHeight="198.0" prefWidth="611.0" style="-fx-background-color: #BB33FF;" GridPane.columnSpan="2">
                            <content>
-                               <GridPane prefHeight="86.0" prefWidth="600.0">
+                               <GridPane alignment="CENTER_RIGHT" prefHeight="86.0" prefWidth="600.0">
                                    <columnConstraints>
                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="75.0" prefWidth="120.0" />
                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="220.0" />
@@ -76,6 +89,15 @@
                                        </TitledPane>
                               <ComboBox fx:id="jobAreaCombo" prefHeight="21.0" prefWidth="207.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <ComboBox fx:id="jobClassCombo" prefHeight="21.0" prefWidth="209.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="jobTypeCombo" accessibleRole="BUTTON" prefHeight="21.0" prefWidth="210.0" GridPane.columnIndex="3" />
+                              <Label alignment="CENTER_RIGHT" layoutX="366.0" layoutY="55.0" prefHeight="21.0" prefWidth="46.0" text="Type:" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                                 <GridPane.margin>
+                                    <Insets right="10.0" />
+                                 </GridPane.margin>
+                              </Label>
                                    </children>
                                </GridPane>
                            </content>
@@ -169,14 +191,11 @@
                                        </TitledPane>
                                        <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="589.0">
                                            <children>
-                                    <MenuButton fx:id="orderNoMenuBtn" mnemonicParsing="false" popupSide="RIGHT" style="-fx-background-color: #FFFEFD; -fx-border-radius: 5; -fx-border-color: #05442F;" text="Order No(s)" textFill="#073627">
+                                    <Button fx:id="orderNoBtn" mnemonicParsing="false" style="-fx-border-color: #088a35; -fx-border-radius: 5; -fx-background-color: #ffffff;" text="Order No(s)" textFill="#088a35">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </MenuButton>
+                                    </Button>
                                     <Separator opacity="0.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                                     <Button fx:id="saveJobCardBtn" mnemonicParsing="false" style="-fx-background-color: #FBFDFE; -fx-border-color: #196109; -fx-border-radius: 5;" text="Save" textFill="#196109">
                                        <font>

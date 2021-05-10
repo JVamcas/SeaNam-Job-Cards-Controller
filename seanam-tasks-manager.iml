@@ -6,7 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="seanam-tasks-manager" />
+          <factory-entry name="seanam-tasks-manager" value="4bf90da2-13d3-45f4-b239-5c31ad9cab2d" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

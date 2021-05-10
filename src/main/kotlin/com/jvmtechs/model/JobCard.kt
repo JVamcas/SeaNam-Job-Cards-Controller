@@ -13,6 +13,15 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 
+enum class JobType{
+    Proactive,
+    Production,
+    Safety,
+    Planned,
+    Breakdown,
+    Other
+}
+
 @Entity
 @Table(name = "Jobcard")
 class JobCard(
@@ -32,7 +41,8 @@ class JobCard(
     IsJobDoneToExpectations: Boolean = false,
     otherExplanation: String? = null,
     supervisor: User? = null,
-    jobCardNo: String? = null
+    jobCardNo: String? = null,
+    jobType: JobType = JobType.Planned
 ) {
 
     @Id
@@ -134,12 +144,18 @@ class JobCard(
     @Column(name = "other_explanation")
     @Convert(converter = SimpleStringConvertor::class)
     val otherExplanationProperty = SimpleStringProperty(otherExplanation)
+
+    @Column(name = "job_Type")
+    @Convert(converter = SimpleStringConvertor::class)
+    val jobTypeProperty = SimpleStringProperty(jobType.name)
+
 }
 
 class JobCardModel : ItemViewModel<JobCard>() {
 
     val jobCardNo = bind(JobCard::jobCardNoProperty)
     val jobDescription = bind(JobCard::jobDescriptionProperty)
+    val jobType = bind(JobCard::jobTypeProperty)
     val workArea = bind(JobCard::workArea)
     val supervisor = bind(JobCard::supervisor)
     val employee = bind(JobCard::employee)

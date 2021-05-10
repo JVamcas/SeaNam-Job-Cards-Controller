@@ -4,6 +4,7 @@ import com.jvmtechs.utils.SimpleBooleanConvertor
 import com.jvmtechs.utils.SimpleStringConvertor
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
+import tornadofx.*
 import javax.persistence.*
 
 @Entity
@@ -24,5 +25,8 @@ class OrderNumber(
     @Column(name = "deleted", nullable = false)
     @Convert(converter = SimpleBooleanConvertor::class)
     val deletedProperty = SimpleBooleanProperty(deleted)
+}
 
+class OrderNoModel : ItemViewModel<OrderNumber>() {
+    var orderNumber = bind(OrderNumber::orderNumberProperty)
 }
