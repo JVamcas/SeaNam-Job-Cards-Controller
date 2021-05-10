@@ -105,9 +105,9 @@ class JobCard(
             jobClassProperty.set(value)
         }
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinColumn(name = "job_card_id")
-    val orderList = listOf<OrderNumber>()
+    var orderList = listOf<OrderNumber>()
 
     @Column(name = "create_date", nullable = true)
     @Convert(converter = SimpleDateConvertor::class)

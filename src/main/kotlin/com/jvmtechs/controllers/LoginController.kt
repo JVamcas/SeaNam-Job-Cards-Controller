@@ -48,10 +48,9 @@ class LoginController : AbstractView("") {
 
                     var user = userModel.item
 
-                    progressIndicator.isVisible = true
+                    Platform.runLater { progressIndicator.isVisible = true }
                     val results = userRepo.authenticate(user.usernameProperty.get(), user.passwordProperty.get())
-                    progressIndicator.isVisible = false
-
+                    Platform.runLater { progressIndicator.isVisible = false }
                     if (results is Results.Success<*>) {
                         user = (results.data as List<User>).firstOrNull()
                         user?.let {

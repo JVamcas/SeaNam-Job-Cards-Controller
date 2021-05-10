@@ -1,6 +1,7 @@
 package com.jvmtechs.controllers.jobcard
 
 import com.jvmtechs.controllers.AbstractModelTableController
+import com.jvmtechs.controllers.home.HomeController
 import com.jvmtechs.model.*
 import com.jvmtechs.repos.JobCardRepo
 import com.jvmtechs.repos.JobClassRepo
@@ -18,16 +19,18 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tornadofx.*
 
-class JobCardOrderNoTableController: AbstractModelTableController<OrderNumber>("") {
+class JobCardOrderNoTableController : AbstractModelTableController<OrderNumber>("") {
 
     override val root: GridPane by fxml("/view/JobCardOrderNoTableView.fxml")
     private val jobClassVBox: VBox by fxid("orderNoVBox")
     private val orderNo: TextField by fxid("orderNo")
     private val saveOrderNoBtn: Button by fxid("saveOrderNoBtn")
     private val clearOrderNoBtn: Button by fxid("clearOrderNoBtn")
-    private val jobCard: JobCard by inject()
+    private val jobCardTableScope = super.scope as AbstractModelTableController<JobCard>.ModelEditScope
+    private val jobCardModel = jobCardTableScope.viewModel as JobCardModel
 
     private val orderNoRepo = OrderNoRepo()
+    private val jobCardRepo = JobCardRepo()
     private val orderNoModel = OrderNoModel()
 
     private var tableView: TableView<OrderNumber>
@@ -84,8 +87,13 @@ class JobCardOrderNoTableController: AbstractModelTableController<OrderNumber>("
             action {
                 orderNoModel.commit()
                 GlobalScope.launch {
-                    val orderNo = orderNoModel.item.also { }
-                    val results = orderNoRepo.addNewModel(orderNo)
+                    val jobCard = jobCardModel.item
+                    jobCard.orderList = jobCard.orderList
+                        .map { it }
+                        .toMutableList()
+                        .also { it.add(orderNoModel.item) }
+
+                    val results = jobCardRepo.updateModel(jobCard)
                     if (results is Results.Success<*>) {
                         orderNoModel.item = OrderNumber()
                         onRefresh()
@@ -104,12 +112,11 @@ class JobCardOrderNoTableController: AbstractModelTableController<OrderNumber>("
     override fun onDock() {
         super.onDock()
         currentStage?.isResizable = false
-        title = "Job Class"
+        title = "Order Numbers"
     }
 
     override suspend fun loadModels(): ObservableList<OrderNumber> {
-
-        val loadResults = orderNoRepo.loadAll()
+        val loadResults = orderNoRepo.loadAll(jobCard = jobCardModel.item)
         if (loadResults is Results.Success<*>)
             return loadResults.data as ObservableList<OrderNumber>
         return observableListOf()

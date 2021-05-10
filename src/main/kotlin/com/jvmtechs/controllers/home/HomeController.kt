@@ -141,7 +141,13 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                 items = JobType.values().map { it.name }.toObservable()
             }
 
-            orderNoBtn.apply { action { find(JobCardOrderNoTableController::class).openModal() } }
+            orderNoBtn.apply {
+                action {
+                    val scope = ModelEditScope(JobCardModel())
+                    setInScope(this@HomeController, scope)
+                    editModel(scope,jobCardModel.item,JobCardOrderNoTableController::class)
+                }
+            }
 
             jobAreaCombo.apply {
                 tooltip = Tooltip("Select work area.")
