@@ -61,6 +61,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     private val toDateHBox: HBox by fxid("toDateHBox")
     private val qrSearchJobCardBtn: Button by fxid("qrSearchJobCardBtn")
     private val qrClearJobCardBtn: Button by fxid("qrClearJobCardBtn")
+    private val jobCardSearchModel = JobCardSearchModel(JobCardSearch())
 
     /** End of [JobCardQuery]**/
 
@@ -126,12 +127,9 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             jobClassCombo.apply {
                 tooltip = Tooltip("Select job class.")
                 bindCombo(jobCardModel.jobClass)
-                GlobalScope.launch {
-                    setJobClass()
-                }
                 setOnMouseClicked {
                     GlobalScope.launch {
-                        setJobClass()
+                        setJobClassComboItems(jobClassCombo)
                     }
                 }
             }
@@ -143,21 +141,22 @@ class HomeController : AbstractModelTableController<JobCard>("") {
 
             orderNoBtn.apply {
                 action {
-                    val scope = ModelEditScope(JobCardModel())
-                    setInScope(this@HomeController, scope)
-                    editModel(scope,jobCardModel.item,JobCardOrderNoTableController::class)
+                    if (!jobCardModel.item.id.isOldId()) {
+                        parseResults(Results.Error(Results.JobCardNotPersistedException()))
+                    } else {
+                        val scope = ModelEditScope(JobCardModel())
+                        setInScope(this@HomeController, scope)
+                        editModel(scope, jobCardModel.item, JobCardOrderNoTableController::class)
+                    }
                 }
             }
 
             jobAreaCombo.apply {
                 tooltip = Tooltip("Select work area.")
                 bindCombo(jobCardModel.workArea)
-                GlobalScope.launch {
-                    setWorkArea()
-                }
                 setOnMouseClicked {
                     GlobalScope.launch {
-                        setWorkArea()
+                        setWorkAreaComboItems(jobAreaCombo)
                     }
                 }
             }
@@ -205,9 +204,37 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             /** End of [JobCard] view init **/
 
             /** Start of [JobCardQuery] view init **/
+            qrEmployeeCombo.apply {
+                bindCombo(jobCardSearchModel.employee)
+                setOnMouseClicked {
+                    GlobalScope.launch {
+                        setEmployeeComboItems(qrEmployeeCombo)
+                    }
+                }
+            }
+
+            qrJobClassCombo.apply {
+                bindCombo(jobCardSearchModel.jobClass)
+                setOnMouseClicked {
+                    GlobalScope.launch {
+                        setJobClassComboItems(qrJobClassCombo)
+                    }
+                }
+            }
+            qrWorkAreaCombo.apply {
+                bindCombo(jobCardSearchModel.workArea)
+                setOnMouseClicked {
+                    GlobalScope.launch {
+                        setWorkAreaComboItems(qrWorkAreaCombo)
+                    }
+                }
+            }
+            qrJobCardNo.apply { bind(jobCardSearchModel.jobCardNo) }
+
             fromDateHBox.let { container ->
                 container.children.add(
                     DateTimePicker().apply {
+                        jobCardSearchModel.fromDate.pickerBind(dateTimeValue)
                         prefWidthProperty().bind(container.prefWidthProperty())
                         minWidthProperty().bind(container.minWidthProperty())
                     })
@@ -217,14 +244,29 @@ class HomeController : AbstractModelTableController<JobCard>("") {
 
                 container.children.add(
                     DateTimePicker().apply {
+                        jobCardSearchModel.toDate.pickerBind(dateTimeValue)
                         prefWidthProperty().bind(container.prefWidthProperty())
                         minWidthProperty().bind(container.minWidthProperty())
                     })
             }
+
             qrSearchJobCardBtn.apply {
                 graphic = FontAwesomeIconView(FontAwesomeIcon.SEARCH).apply {
                     style {
                         fill = c("#109865")
+                    }
+                }
+                action {
+                    jobCardSearchModel.commit()
+                    GlobalScope.launch {
+                        val loadResults =
+                            repo.loadFilteredModel(jobCardSearchModel.item)
+
+                        if (loadResults is Results.Success<*>) {
+                            modelList.asyncItems {
+                                (loadResults.data as List<JobCard>)
+                            }
+                        } else parseResults(loadResults)
                     }
                 }
             }
@@ -235,13 +277,16 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                         fill = c("#b9162d")
                     }
                 }
+                action {
+                    jobCardSearchModel.item = JobCardSearch()
+                    onRefresh()
+                }
             }
 
             contextmenu {
                 item("Work Areas") { action { find(WorkAreaTableController::class).openModal() } }
                 item("Job Class") { action { find(JobClassTableController::class).openModal() } }
             }
-
             /** End of [JobCardQuery] view init **/
 
 
@@ -352,22 +397,32 @@ class HomeController : AbstractModelTableController<JobCard>("") {
         }
     }
 
-    private suspend fun setWorkArea() {
+    private suspend fun setWorkAreaComboItems(combo: ComboBox<WorkArea>) {
         val loadResults = WorkAreaRepo().loadAll()
         Platform.runLater {
-            jobAreaCombo.items =
+            combo.items =
                 if (loadResults is Results.Success<*>)
                     loadResults.data as ObservableList<WorkArea>
                 else observableListOf()
         }
     }
 
-    private suspend fun setJobClass() {
+    private suspend fun setJobClassComboItems(combo: ComboBox<JobClass>) {
         val loadResults = JobClassRepo().loadAll()
         Platform.runLater {
-            jobClassCombo.items =
+            combo.items =
                 if (loadResults is Results.Success<*>)
                     loadResults.data as ObservableList<JobClass>
+                else observableListOf()
+        }
+    }
+
+    private suspend fun setEmployeeComboItems(combo: ComboBox<User>) {
+        val loadResults = UserRepo().loadAll()
+        Platform.runLater {
+            combo.items =
+                if (loadResults is Results.Success<*>)
+                    loadResults.data as ObservableList<User>
                 else observableListOf()
         }
     }

@@ -71,8 +71,10 @@
                               <Insets right="2.0" />
                            </GridPane.margin>
                         </HBox>
-                        <Label text="Order No" GridPane.rowIndex="1" />
-                        <TextField fx:id="orderNo" prefHeight="25.0" prefWidth="379.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Order No" />
+                        <TextField fx:id="orderNo" prefHeight="25.0" prefWidth="379.0" GridPane.columnIndex="1" />
+                        <Label text="Description" GridPane.rowIndex="1" />
+                        <TextField fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </content>

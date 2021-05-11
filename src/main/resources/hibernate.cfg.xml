@@ -32,6 +32,7 @@
         <mapping class="com.jvmtechs.model.User"/>
         <mapping class="com.jvmtechs.model.WorkArea"/>
         <mapping class="com.jvmtechs.model.OrderNumber"/>
+        <mapping class="com.jvmtechs.model.AccessType"/>
 
     </session-factory>
 </hibernate-configuration>

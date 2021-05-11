@@ -15,7 +15,7 @@ import tornadofx.*
 abstract class AbstractView(private val viewTitle: String) : View(viewTitle) {
 
 
-    object Account{
+    object Account {
         val currentUser = SimpleObjectProperty<User>()
     }
 
@@ -27,12 +27,11 @@ abstract class AbstractView(private val viewTitle: String) : View(viewTitle) {
                 if (!newUser.isInvalid()) {
                     header.show()
                     dock<HomeController>()
-                    if(!find(HomeMenu::class.java).isDocked)
+                    if (!find(HomeMenu::class.java).isDocked)
                         add(HomeMenu::class)
 
                     currentStage?.isResizable = true
-                }
-                else {
+                } else {
                     find(HomeMenu::class.java).removeFromParent()
                     dock<LoginController>()
                 }
@@ -64,8 +63,16 @@ abstract class AbstractView(private val viewTitle: String) : View(viewTitle) {
         } else if (results is Results.Error) {
 
             when (results.code) {
-
-                Results.Error.CODE.UNKNOWN -> {
+                Results.Error.CODE.JOB_CARD_NOT_PERSISTED -> {
+                    showError(
+                        "Invalid Job Card Error!",
+                        msg = "To add/ view orders related to a Job Card:" +
+                                "\n" +
+                                "1. Select the Job Card in the table by double clicking on it.\n"
+                                + "2. Click on the Order No button."
+                    )
+                }
+                else -> {
                     showError(
                         header = "Unknown Error", msg = "An unknown error has occurred. What to do:\n" +
                                 "1.  Restart the program.\n" +
@@ -83,7 +90,9 @@ abstract class AbstractView(private val viewTitle: String) : View(viewTitle) {
 
     override fun onDock() {
         super.onDock()
-        title = "SeaNam Task Manager                  ${if (currentUser.get().isInvalid())"" else currentUser.get()?.toString()}"
+        title = "SeaNam Task Manager                  ${
+            if (currentUser.get().isInvalid()) "" else currentUser.get()?.toString()
+        }"
         heading = viewTitle
     }
 

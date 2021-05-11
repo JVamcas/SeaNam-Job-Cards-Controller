@@ -254,7 +254,7 @@
                                      <Insets left="10.0" />
                                  </GridPane.margin>
                              </Label>
-                             <Label text="Work Class" GridPane.rowIndex="2">
+                             <Label text="Job Class" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                      <Insets left="10.0" />
                                  </GridPane.margin>

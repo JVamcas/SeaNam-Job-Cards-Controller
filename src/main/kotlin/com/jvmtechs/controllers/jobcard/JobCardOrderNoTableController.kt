@@ -6,6 +6,7 @@ import com.jvmtechs.model.*
 import com.jvmtechs.repos.JobCardRepo
 import com.jvmtechs.repos.JobClassRepo
 import com.jvmtechs.repos.OrderNoRepo
+import com.jvmtechs.utils.ParseUtil.Companion.generalTxtFieldValidation
 import com.jvmtechs.utils.ParseUtil.Companion.isNumber
 import com.jvmtechs.utils.Results
 import com.jvmtechs.utils.cell.EditingCell
@@ -24,6 +25,7 @@ class JobCardOrderNoTableController : AbstractModelTableController<OrderNumber>(
     override val root: GridPane by fxml("/view/JobCardOrderNoTableView.fxml")
     private val jobClassVBox: VBox by fxid("orderNoVBox")
     private val orderNo: TextField by fxid("orderNo")
+    private val description: TextField by fxid("description")
     private val saveOrderNoBtn: Button by fxid("saveOrderNoBtn")
     private val clearOrderNoBtn: Button by fxid("clearOrderNoBtn")
     private val jobCardTableScope = super.scope as AbstractModelTableController<JobCard>.ModelEditScope
@@ -53,6 +55,10 @@ class JobCardOrderNoTableController : AbstractModelTableController<OrderNumber>(
                     contentWidth(padding = 10.0, useAsMin = true)
                     setCellFactory { EditingCell(orderNoRepo) }
                 }
+                column("Description", OrderNumber::descriptionProperty) {
+                    contentWidth(padding = 10.0, useAsMin = true)
+                    setCellFactory { EditingCell(orderNoRepo) }
+                }
 
                 enableCellEditing()
 
@@ -78,6 +84,11 @@ class JobCardOrderNoTableController : AbstractModelTableController<OrderNumber>(
                     null
                 else error("Enter an integer value.")
             }
+        }
+
+        description.apply {
+            bind(orderNoModel.description)
+            generalTxtFieldValidation("Enter a short description.", 20)
         }
 
 

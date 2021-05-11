@@ -86,5 +86,8 @@ class ParseUtil {
             bind(property)
             bindSelected(property)
         }
+
     }
 }
+
+
