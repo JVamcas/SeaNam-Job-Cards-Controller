@@ -29,6 +29,17 @@ class UserController : AbstractModelTableController<User>(title = "") {
     private val saveUserAccessBtn: Button by fxid("saveUserAccessBtn")
 
     private val updateOfficeFieldProp: CheckBox by fxid("updateOfficeFieldProp")
+    private val addUserProp: CheckBox by fxid("addUserProp")
+    private val deleteUserProp: CheckBox by fxid("deleteUserProp")
+    private val addJobCardProp: CheckBox by fxid("addJobCardProp")
+    private val deleteJobCardProp: CheckBox by fxid("deleteJobCardProp")
+    private val addWorkAreaProp: CheckBox by fxid("addWorkAreaProp")
+    private val deleteWorkAreaProp: CheckBox by fxid("deleteWorkAreaProp")
+    private val addJobClassProp: CheckBox by fxid("addJobClassProp")
+    private val deleteJobClassProp: CheckBox by fxid("deleteJobClassProp")
+    private val addOrderNumberProp: CheckBox by fxid("addOrderNumberProp")
+    private val deleteOrderNumberProp: CheckBox by fxid("deleteOrderNumberProp")
+
     private val accessTypeModel = AccessTypeModel()
 
 
@@ -39,29 +50,44 @@ class UserController : AbstractModelTableController<User>(title = "") {
 
     init {
         userModel.item = User()
-        accessTypeModel.item = AccessType()
 
         /***
          * Start of user [AccessType]
          */
-        updateOfficeFieldProp.apply {
-            bind(accessTypeModel.updateOfficeField)
-
-        }
+        updateOfficeFieldProp.apply { bind(accessTypeModel.updateOfficeField) }
+        addUserProp.apply { bind(accessTypeModel.addUser) }
+        deleteUserProp.apply { bind(accessTypeModel.deleteUser) }
+        addJobCardProp.apply { bind(accessTypeModel.addJobCard) }
+        deleteJobCardProp.apply { bind(accessTypeModel.deleteJobCard) }
+        addWorkAreaProp.apply { bind(accessTypeModel.addWorkArea) }
+        deleteWorkAreaProp.apply { bind(accessTypeModel.deleteWorkArea) }
+        addJobClassProp.apply { bind(accessTypeModel.addJobClass) }
+        deleteJobClassProp.apply { bind(accessTypeModel.deleteJobClass) }
+        addOrderNumberProp.apply { bind(accessTypeModel.addOrderNo) }
+        deleteOrderNumberProp.apply { bind(accessTypeModel.deleteOrderNo) }
 
         saveUserAccessBtn.apply {
             enableWhen { accessTypeModel.dirty }
             action {
-                accessTypeModel.commit()
-                userModel.item.permission = accessTypeModel.item
-                GlobalScope.launch {
-                    val permissionResults = accessRepo.addNewModel(accessTypeModel.item)
-                    if(permissionResults is Results.Success<*>){
-                        val results = userRepo.updateModel(userModel.item)
-                        if(results is Results.Error)
-                            parseResults(results)
+                if(userModel.item.id.isOldId()) {
+                    accessTypeModel.commit()
+                    userModel.item.permission = accessTypeModel.item
+                    val accessType = accessTypeModel.item
+                    GlobalScope.launch {
+                        val permissionResults =
+                            if (!accessType.id.isOldId()) accessRepo.addNewModel(accessType) else accessRepo.updateModel(
+                                accessType
+                            )
+                        if (permissionResults is Results.Success<*>) {
+                            val results = userRepo.updateModel(userModel.item)
+                            if (results is Results.Error)
+                                parseResults(results)
+                        }
                     }
                 }
+                else showError(header = "Entity Persistent Error", msg = "To alter user permission:\n" +
+                        "1. If it's a new user, first save the user.\n" +
+                        "2. Else select the user from the table by double clicking on him.")
             }
         }
 
@@ -112,7 +138,7 @@ class UserController : AbstractModelTableController<User>(title = "") {
                     enableCellEditing()
                     onUserSelect {
                         userModel.item = it
-                        accessTypeModel.item = it.permission
+                        accessTypeModel.item = it.permission ?: AccessType()
                     }
                 }
             }
@@ -174,7 +200,10 @@ class UserController : AbstractModelTableController<User>(title = "") {
                 }
             }
             clearUserBtn.apply {
-                action { userModel.item = User() }
+                action {
+                    userModel.item = User()
+                    accessTypeModel.item = AccessType()
+                }
             }
 
             userModel.validate(decorateErrors = false)

@@ -90,7 +90,7 @@ abstract class AbstractView(private val viewTitle: String) : View(viewTitle) {
 
     override fun onDock() {
         super.onDock()
-        title = "SeaNam Task Manager                  ${
+        title = "SeaNam Tasks Manager                  ${
             if (currentUser.get().isInvalid()) "" else currentUser.get()?.toString()
         }"
         heading = viewTitle

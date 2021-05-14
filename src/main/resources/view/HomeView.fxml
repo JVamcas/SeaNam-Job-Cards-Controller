@@ -23,7 +23,7 @@
 <BorderPane prefHeight="903.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <left>
        <VBox prefHeight="928.0" prefWidth="645.0" style="-fx-border-width: 2; -fx-border-color: #094F99;" BorderPane.alignment="CENTER">
-           <TitledPane alignment="CENTER" contentDisplay="TOP" text="Add/ Edit Job Card" textFill="#0861b5">
+           <TitledPane fx:id="jobCardLayout" alignment="CENTER" contentDisplay="TOP" text="Add/ Edit Job Card" textFill="#0861b5">
                <font>
                    <Font name="System Bold" size="12.0" />
                </font>
@@ -231,7 +231,7 @@
                <Insets left="10.0" right="10.0" top="5.0" />
             </VBox.margin>
            </TitledPane>
-             <TitledPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="438.0" text="Job Card Queries" textFill="#636808">
+             <TitledPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="438.0" text="Job Cards Query" textFill="#636808">
                  <content>
                      <GridPane maxHeight="-Infinity" prefHeight="229.0" prefWidth="559.0">
                          <columnConstraints>

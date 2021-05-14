@@ -48,6 +48,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     private val clearJobCardBtn: Button by fxid("clearJobCardBtn")
     private val jobTypeCombo: ComboBox<String> by fxid("jobTypeCombo")
     private val orderNoBtn: Button by fxid("orderNoBtn")
+    private val jobCardLayout: TitledPane by fxid("jobCardLayout")
 
 
     /** End of [JobCard]**/
@@ -62,6 +63,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     private val qrSearchJobCardBtn: Button by fxid("qrSearchJobCardBtn")
     private val qrClearJobCardBtn: Button by fxid("qrClearJobCardBtn")
     private val jobCardSearchModel = JobCardSearchModel(JobCardSearch())
+    private val currentUser = Account.currentUser.get()
 
     /** End of [JobCardQuery]**/
 
@@ -76,6 +78,8 @@ class HomeController : AbstractModelTableController<JobCard>("") {
 
         root.apply {
             /** Start of [JobCard] view init **/
+
+            jobCardLayout.enableWhen { currentUser.permission!!.addJobCardProp }
 
             workDoneSats.apply {
                 bind(jobCardModel.isWorkDoneSats)
@@ -125,6 +129,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             jobClassCombo.apply {
+                enableWhen { currentUser.permission!!.updateOfficeFieldProp }
                 tooltip = Tooltip("Select job class.")
                 bindCombo(jobCardModel.jobClass)
                 setOnMouseClicked {
@@ -133,6 +138,18 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                     }
                 }
             }
+
+            jobAreaCombo.apply {
+                enableWhen { currentUser.permission!!.updateOfficeFieldProp }
+                tooltip = Tooltip("Select work area.")
+                bindCombo(jobCardModel.workArea)
+                setOnMouseClicked {
+                    GlobalScope.launch {
+                        setWorkAreaComboItems(jobAreaCombo)
+                    }
+                }
+            }
+
             jobTypeCombo.apply {
                 tooltip = Tooltip("Select the type for this job.")
                 bindCombo(jobCardModel.jobType)
@@ -140,6 +157,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             orderNoBtn.apply {
+                enableWhen { currentUser.permission?.updateOfficeFieldProp!! }
                 action {
                     if (!jobCardModel.item.id.isOldId()) {
                         parseResults(Results.Error(Results.JobCardNotPersistedException()))
@@ -151,17 +169,8 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                 }
             }
 
-            jobAreaCombo.apply {
-                tooltip = Tooltip("Select work area.")
-                bindCombo(jobCardModel.workArea)
-                setOnMouseClicked {
-                    GlobalScope.launch {
-                        setWorkAreaComboItems(jobAreaCombo)
-                    }
-                }
-            }
-
             saveJobCardBtn.apply {
+                enableWhen { currentUser.permission?.addJobCardProp!! }
                 enableWhen { jobCardModel.dirty }
                 graphic = FontAwesomeIconView(FontAwesomeIcon.SAVE).apply {
                     style {
@@ -373,6 +382,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
         currentStage?.scene?.stylesheets?.add("style/style.css")
         disableSave()
         disableCreate()
+        deletableWhen { currentUser.permission!!.deleteJobCardProp }
     }
 
     override suspend fun loadModels(): ObservableList<JobCard> {
