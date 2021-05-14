@@ -9,18 +9,18 @@ import tornadofx.*
 import javax.persistence.*
 
 
-enum class UserGroup{Employee, Supervisor, Admin}
+enum class UserGroup { Employee, Supervisor, Admin }
 
 @Entity
-@Table(name="Users")
+@Table(name = "Users")
 class User(
-     firstName: String? = null,
-     lastName: String? = null,
-     userGroup: UserGroup = UserGroup.Employee,
-     jobTitle: JobTitle? = null,
-     deleted: Boolean = false,
-     username: String? = null,
-     password: String? = null
+    firstName: String? = null,
+    lastName: String? = null,
+    userGroup: UserGroup = UserGroup.Employee,
+    jobTitle: JobTitle? = null,
+    deleted: Boolean = false,
+    username: String? = null,
+    password: String? = null
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,17 +53,17 @@ class User(
     @Transient
     val jobTitleProperty = SimpleObjectProperty(jobTitle)
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="job_title_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "job_title_id")
     var jobTitle: JobTitle? = null
         set(value) {
             field = value
             jobTitleProperty.set(value)
         }
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="permissions")
-    val permissions = listOf<AccessType>()
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "permission_id")
+    var permission: AccessType? = null
 
     override fun toString(): String {
         return "${firstNameProperty.get()} ${lastNameProperty.get()}"
@@ -84,63 +84,12 @@ class User(
 }
 
 class UserModel : ItemViewModel<User>() {
+
     var firstName = bind(User::firstNameProperty)
     var lastName = bind(User::lastNameProperty)
     var jobTitle = bind(User::jobTitle)
     var userGroup = bind(User::userGroupProperty)
     var username = bind(User::usernameProperty)
     var password = bind(User::passwordProperty)
-}
 
-@Entity
-@Table(name="accessType")
-class AccessType{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Int? = null
-
-    @Column(name="updateOffice")
-    @Convert(converter = SimpleBooleanConvertor::class)
-    val updateOfficeFieldProp = SimpleBooleanProperty(false)
-
-    @Column(name="addUser")
-    @Convert(converter = SimpleBooleanConvertor::class)
-    val addUserProp = SimpleBooleanProperty(false)
-
-    @Column(name="deleteUser")
-    @Convert(converter = SimpleBooleanConvertor::class)
-    val deleteUserProp = SimpleBooleanProperty(false)
-
-    @Column(name="addJobCard")
-    @Convert(converter = SimpleBooleanConvertor::class)
-    val addJobCardProp = SimpleBooleanProperty(false)
-
-    @Column(name="deleteJobCard")
-    @Convert(converter = SimpleBooleanConvertor::class)
-    val deleteJobCardProp = SimpleBooleanProperty(false)
-
-    @Column(name="addWorkArea")
-    @Convert(converter = SimpleBooleanConvertor::class)
-    val addWorkAreaProp = SimpleBooleanProperty(false)
-
-    @Column(name="deleteWorkArea")
-    @Convert(converter = SimpleBooleanConvertor::class)
-    val deleteWorkAreaProp = SimpleBooleanProperty(false)
-
-    @Column(name="addJobClass")
-    @Convert(converter = SimpleBooleanConvertor::class)
-    val addJobClassProp = SimpleBooleanProperty(false)
-
-    @Column(name="deleteJobClass")
-    @Convert(converter = SimpleBooleanConvertor::class)
-    val deleteJobClassProp = SimpleBooleanProperty(false)
-
-    @Column(name="addOrderNumber")
-    @Convert(converter = SimpleBooleanConvertor::class)
-    val addOrderNumberProp = SimpleBooleanProperty(false)
-
-    @Column(name="deleteOrderNumber")
-    @Convert(converter = SimpleBooleanConvertor::class)
-    val deleteOrderNumberProp = SimpleBooleanProperty(false)
 }

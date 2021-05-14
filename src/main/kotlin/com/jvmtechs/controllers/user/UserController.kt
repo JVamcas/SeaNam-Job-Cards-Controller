@@ -2,6 +2,7 @@ package com.jvmtechs.controllers.user
 
 import com.jvmtechs.controllers.AbstractModelTableController
 import com.jvmtechs.model.*
+import com.jvmtechs.repos.AccessTypeRepo
 import com.jvmtechs.repos.JobTitleRepo
 import com.jvmtechs.repos.UserRepo
 import com.jvmtechs.utils.ParseUtil.Companion.generalTxtFieldValidation
@@ -25,13 +26,49 @@ class UserController : AbstractModelTableController<User>(title = "") {
     private val password: TextField by fxid("password")
     private val saveUserBtn: Button by fxid("saveUserBtn")
     private val clearUserBtn: Button by fxid("clearUserBtn")
+    private val saveUserAccessBtn: Button by fxid("saveUserAccessBtn")
+
+    private val updateOfficeFieldProp: CheckBox by fxid("updateOfficeFieldProp")
+    private val accessTypeModel = AccessTypeModel()
+
 
     private val userModel = UserModel()
     private val userRepo = UserRepo()
+    private val accessRepo = AccessTypeRepo()
     private lateinit var tableView: TableView<User>
 
     init {
         userModel.item = User()
+        accessTypeModel.item = AccessType()
+
+        /***
+         * Start of user [AccessType]
+         */
+        updateOfficeFieldProp.apply {
+            bind(accessTypeModel.updateOfficeField)
+
+        }
+
+        saveUserAccessBtn.apply {
+            enableWhen { accessTypeModel.dirty }
+            action {
+                accessTypeModel.commit()
+                userModel.item.permission = accessTypeModel.item
+                GlobalScope.launch {
+                    val permissionResults = accessRepo.addNewModel(accessTypeModel.item)
+                    if(permissionResults is Results.Success<*>){
+                        val results = userRepo.updateModel(userModel.item)
+                        if(results is Results.Error)
+                            parseResults(results)
+                    }
+                }
+            }
+        }
+
+        /***
+         * End of user [AccessType]
+         */
+
         root.apply {
 
             center {
@@ -75,6 +112,7 @@ class UserController : AbstractModelTableController<User>(title = "") {
                     enableCellEditing()
                     onUserSelect {
                         userModel.item = it
+                        accessTypeModel.item = it.permission
                     }
                 }
             }

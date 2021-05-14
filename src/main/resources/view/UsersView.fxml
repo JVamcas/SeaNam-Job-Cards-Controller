@@ -120,7 +120,7 @@
                </HBox>
                </GridPane>
            </TitledPane>
-         <TitledPane alignment="CENTER" animated="false" text="User Permissions" textFill="#1310d7">
+         <TitledPane alignment="CENTER" text="User Permissions" textFill="#1310d7">
            <content>
                <VBox prefHeight="200.0" prefWidth="330.0" spacing="5.0">
                   <children>
@@ -137,7 +137,7 @@
                      <CheckBox fx:id="deleteOrderNumberProp" mnemonicParsing="false" text="Delete order numbers." />
                      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                         <children>
-                           <Button fx:id="saveUserBtn1" mnemonicParsing="false" style="-fx-background-color: #FFFEFD; -fx-border-radius: 10; -fx-border-color: #075607;" text="Save" textFill="#075607">
+                           <Button fx:id="saveUserAccessBtn" mnemonicParsing="false" style="-fx-background-color: #FFFEFD; -fx-border-radius: 10; -fx-border-color: #075607;" text="Save" textFill="#075607">
                               <font>
                                  <Font name="System Bold" size="12.0" />
                               </font>
