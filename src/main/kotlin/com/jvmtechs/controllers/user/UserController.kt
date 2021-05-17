@@ -68,26 +68,32 @@ class UserController : AbstractModelTableController<User>(title = "") {
 
         saveUserAccessBtn.apply {
             enableWhen { accessTypeModel.dirty }
+            accessTypeModel.commit()
             action {
-                if(userModel.item.id.isOldId()) {
-                    accessTypeModel.commit()
-                    userModel.item.permission = accessTypeModel.item
-                    val accessType = accessTypeModel.item
-                    GlobalScope.launch {
-                        val permissionResults =
-                            if (!accessType.id.isOldId()) accessRepo.addNewModel(accessType) else accessRepo.updateModel(
-                                accessType
-                            )
-                        if (permissionResults is Results.Success<*>) {
-                            val results = userRepo.updateModel(userModel.item)
-                            if (results is Results.Error)
-                                parseResults(results)
+                if (accessTypeModel.item.id == Account.currentUser.get().permission?.id) {
+                    showError(header = "Invalid Permission", msg = "Cannot issue yourself permissions.")
+                } else {
+                    if (userModel.item.id.isOldId()) {
+                        accessTypeModel.commit()
+                        userModel.item.permission = accessTypeModel.item
+                        val accessType = accessTypeModel.item
+                        GlobalScope.launch {
+                            val permissionResults =
+                                if (!accessType.id.isOldId()) accessRepo.addNewModel(accessType) else accessRepo.updateModel(
+                                    accessType
+                                )
+                            if (permissionResults is Results.Success<*>) {
+                                val results = userRepo.updateModel(userModel.item)
+                                if (results is Results.Error)
+                                    parseResults(results)
+                            }
                         }
-                    }
+                    } else showError(
+                        header = "Entity Persistent Error", msg = "To alter user permission:\n" +
+                                "1. If it's a new user, first save the user.\n" +
+                                "2. Else select the user from the table by double clicking on him."
+                    )
                 }
-                else showError(header = "Entity Persistent Error", msg = "To alter user permission:\n" +
-                        "1. If it's a new user, first save the user.\n" +
-                        "2. Else select the user from the table by double clicking on him.")
             }
         }
 
@@ -100,7 +106,6 @@ class UserController : AbstractModelTableController<User>(title = "") {
             center {
 
                 tableView = tableview(modelList) {
-
                     columnResizePolicy = TableView.UNCONSTRAINED_RESIZE_POLICY
                     smartResize()
                     items = modelList

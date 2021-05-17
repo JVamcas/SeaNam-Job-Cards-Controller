@@ -49,8 +49,6 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     private val jobTypeCombo: ComboBox<String> by fxid("jobTypeCombo")
     private val orderNoBtn: Button by fxid("orderNoBtn")
     private val jobCardLayout: TitledPane by fxid("jobCardLayout")
-
-
     /** End of [JobCard]**/
 
     /** Start of [JobCardQuery]**/
@@ -63,7 +61,6 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     private val qrSearchJobCardBtn: Button by fxid("qrSearchJobCardBtn")
     private val qrClearJobCardBtn: Button by fxid("qrClearJobCardBtn")
     private val jobCardSearchModel = JobCardSearchModel(JobCardSearch())
-    private val currentUser = Account.currentUser.get()
 
     /** End of [JobCardQuery]**/
 
@@ -79,24 +76,11 @@ class HomeController : AbstractModelTableController<JobCard>("") {
         root.apply {
             /** Start of [JobCard] view init **/
 
-            jobCardLayout.enableWhen { currentUser.permission!!.addJobCardProp }
-
-            workDoneSats.apply {
-                bind(jobCardModel.isWorkDoneSats)
-            }
-
-            needReplacement.apply {
-                bind(jobCardModel.isNeedReplacement)
-            }
-            recurringJob.apply {
-                bind(jobCardModel.isRecurring)
-            }
-            timeSatisfactory.apply {
-                bind(jobCardModel.isTimeFrameSatisfactory)
-            }
-            doneToSpecs.apply {
-                bind(jobCardModel.isJobDoneToExpectations)
-            }
+            workDoneSats.apply { bind(jobCardModel.isWorkDoneSats) }
+            needReplacement.apply { bind(jobCardModel.isNeedReplacement) }
+            recurringJob.apply { bind(jobCardModel.isRecurring) }
+            timeSatisfactory.apply { bind(jobCardModel.isTimeFrameSatisfactory) }
+            doneToSpecs.apply { bind(jobCardModel.isJobDoneToExpectations) }
 
             startDateHBox.let { container ->
                 container.children.add(
@@ -129,7 +113,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             jobClassCombo.apply {
-                enableWhen { currentUser.permission!!.updateOfficeFieldProp }
+                enableWhen { Account.currentUser.get().permission!!.updateOfficeFieldProp }
                 tooltip = Tooltip("Select job class.")
                 bindCombo(jobCardModel.jobClass)
                 setOnMouseClicked {
@@ -140,7 +124,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             jobAreaCombo.apply {
-                enableWhen { currentUser.permission!!.updateOfficeFieldProp }
+                enableWhen { Account.currentUser.get().permission!!.updateOfficeFieldProp }
                 tooltip = Tooltip("Select work area.")
                 bindCombo(jobCardModel.workArea)
                 setOnMouseClicked {
@@ -157,7 +141,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             orderNoBtn.apply {
-                enableWhen { currentUser.permission?.updateOfficeFieldProp!! }
+                enableWhen { Account.currentUser.get().permission?.updateOfficeFieldProp!! }
                 action {
                     if (!jobCardModel.item.id.isOldId()) {
                         parseResults(Results.Error(Results.JobCardNotPersistedException()))
@@ -170,7 +154,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             saveJobCardBtn.apply {
-                enableWhen { currentUser.permission?.addJobCardProp!! }
+                enableWhen { Account.currentUser.get().permission?.addJobCardProp!! }
                 enableWhen { jobCardModel.dirty }
                 graphic = FontAwesomeIconView(FontAwesomeIcon.SAVE).apply {
                     style {
@@ -382,7 +366,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
         currentStage?.scene?.stylesheets?.add("style/style.css")
         disableSave()
         disableCreate()
-        deletableWhen { currentUser.permission!!.deleteJobCardProp }
+        refreshJobCardPermissions()
     }
 
     override suspend fun loadModels(): ObservableList<JobCard> {
@@ -435,5 +419,14 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                     loadResults.data as ObservableList<User>
                 else observableListOf()
         }
+    }
+
+    private fun refreshJobCardPermissions(){
+        val user = Account.currentUser.get()
+        deletableWhen { user.permission!!.deleteJobCardProp }
+        jobCardLayout.enableWhen {user.permission!!.addJobCardProp }
+        jobClassCombo.enableWhen { user.permission!!.addJobClassProp }
+        jobAreaCombo.enableWhen { user.permission!!.addWorkAreaProp }
+        orderNoBtn.enableWhen { user.permission!!.addOrderNumberProp }
     }
 }

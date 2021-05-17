@@ -2,6 +2,7 @@ package com.jvmtechs.controllers
 
 import com.jvmtechs.controllers.AbstractView.Account.currentUser
 import com.jvmtechs.controllers.home.HomeController
+import com.jvmtechs.controllers.user.UserController
 import com.jvmtechs.model.User
 import com.jvmtechs.utils.ParseUtil.Companion.isInvalid
 import com.jvmtechs.utils.Results
@@ -100,5 +101,7 @@ abstract class AbstractView(private val viewTitle: String) : View(viewTitle) {
 
     fun logout() {
         currentUser.set(User())
+        find(HomeController::class).removeFromParent()
+        find(UserController::class).removeFromParent()
     }
 }
