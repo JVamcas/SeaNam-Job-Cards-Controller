@@ -5,8 +5,11 @@ import com.jvmtechs.model.*
 import com.jvmtechs.repos.AccessTypeRepo
 import com.jvmtechs.repos.JobTitleRepo
 import com.jvmtechs.repos.UserRepo
+import com.jvmtechs.utils.ParseUtil.Companion.authorized
 import com.jvmtechs.utils.ParseUtil.Companion.generalTxtFieldValidation
+import com.jvmtechs.utils.ParseUtil.Companion.isAdmin
 import com.jvmtechs.utils.ParseUtil.Companion.isOldId
+import com.jvmtechs.utils.ParseUtil.Companion.isOwnProfile
 import com.jvmtechs.utils.Results
 import javafx.collections.ObservableList
 import javafx.scene.control.*
@@ -39,9 +42,10 @@ class UserController : AbstractModelTableController<User>(title = "") {
     private val deleteJobClassProp: CheckBox by fxid("deleteJobClassProp")
     private val addOrderNumberProp: CheckBox by fxid("addOrderNumberProp")
     private val deleteOrderNumberProp: CheckBox by fxid("deleteOrderNumberProp")
+    private val userLayout: TitledPane by fxid("userLayout")
+    private val userPermission: TitledPane by fxid("userPermission")
 
     private val accessTypeModel = AccessTypeModel()
-
 
     private val userModel = UserModel()
     private val userRepo = UserRepo()
@@ -71,7 +75,7 @@ class UserController : AbstractModelTableController<User>(title = "") {
             accessTypeModel.commit()
             action {
                 if (accessTypeModel.item.id == Account.currentUser.get().permission?.id) {
-                    showError(header = "Invalid Permission", msg = "Cannot issue yourself permissions.")
+                    showError(header = "Invalid Operation", msg = "Cannot issue yourself permissions.")
                 } else {
                     if (userModel.item.id.isOldId()) {
                         accessTypeModel.commit()
@@ -189,18 +193,26 @@ class UserController : AbstractModelTableController<User>(title = "") {
                 enableWhen { userModel.valid }
                 action {
                     userModel.commit()
-                    GlobalScope.launch {
-                        val driver = userModel.item
-                        val results =
-                            if (driver.id.isOldId()) userRepo.updateModel(model = driver) else userRepo.addNewModel(
-                                driver
-                            )
-                        if (results is Results.Success<*>) {
-                            userModel.item = User()
-                            onRefresh()
-                            return@launch
+                    val user = Account.currentUser.get()
+                    if (userModel.item.isOwnProfile() || user.permission!!.addUserProp.authorized(user).get()) {
+                        GlobalScope.launch {
+                            val driver = userModel.item
+                            val results =
+                                if (driver.id.isOldId()) userRepo.updateModel(model = driver) else userRepo.addNewModel(
+                                    driver
+                                )
+                            if (results is Results.Success<*>) {
+                                userModel.item = User()
+                                onRefresh()
+                                return@launch
+                            }
+                            parseResults(results)
                         }
-                        parseResults(results)
+                    } else {
+                        showError(
+                            header = "Permission Denied!!",
+                            msg = "You do not have permission to add or edit user profile."
+                        )
                     }
                 }
             }
@@ -233,14 +245,22 @@ class UserController : AbstractModelTableController<User>(title = "") {
     override fun onDock() {
         super.onDock()
         currentStage?.isMaximized = true
+        refreshUserLayoutPermission()
     }
 
-
     override suspend fun loadModels(): ObservableList<User> {
-
         val loadResults = userRepo.loadAll()
         if (loadResults is Results.Success<*>)
             return loadResults.data as ObservableList<User>
         return observableListOf()
+    }
+
+    private fun refreshUserLayoutPermission() {
+        disableCreate()
+        disableSave()
+        val user = Account.currentUser.get()
+        userPermission.enableWhen { user.isAdmin() }
+//        userLayout.enableWhen { user.permission!!.addUserProp.authorized(user)  }
+        deletableWhen { user.permission!!.deleteUserProp.authorized(user) }
     }
 }

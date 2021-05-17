@@ -1,27 +1,33 @@
 package com.jvmtechs.utils
 
-
+import com.jvmtechs.controllers.AbstractView
 import com.jvmtechs.model.User
+import com.jvmtechs.model.UserGroup
 import javafx.beans.property.Property
+import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.value.ChangeListener
-import javafx.beans.value.ObservableValue
 import javafx.scene.control.ComboBox
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
 import tornadofx.*
 import java.lang.Double.parseDouble
 import java.sql.Timestamp
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 class ParseUtil {
 
     companion object {
 
+        fun User?.isAdmin(): SimpleBooleanProperty {
+            return SimpleBooleanProperty(this != null && UserGroup.Admin.name == this.userGroupProperty.get())
+        }
+        fun User?.isOwnProfile():Boolean{
+            return this!=null && this.id == AbstractView.Account.currentUser.get().id
+        }
 
-        fun String?.isValidPassword() = this != null && this.length >= 4
+        fun SimpleBooleanProperty.authorized(user: User?): SimpleBooleanProperty {
+            return SimpleBooleanProperty(this.get() || user.isAdmin().get())
+        }
 
         fun TextField.numberValidation(msg: String) =
             validator(ValidationTrigger.OnChange()) {

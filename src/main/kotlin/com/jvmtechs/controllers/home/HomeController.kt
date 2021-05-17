@@ -12,6 +12,7 @@ import com.jvmtechs.utils.ParseUtil.Companion.generalTxtFieldValidation
 import com.jvmtechs.utils.ParseUtil.Companion.isOldId
 import com.jvmtechs.utils.ParseUtil.Companion.numberValidation
 import com.jvmtechs.utils.ParseUtil.Companion.pickerBind
+import com.jvmtechs.utils.ParseUtil.Companion.authorized
 import com.jvmtechs.utils.Results
 import com.jvmtechs.utils.TMDateTimePicker
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
@@ -49,6 +50,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     private val jobTypeCombo: ComboBox<String> by fxid("jobTypeCombo")
     private val orderNoBtn: Button by fxid("orderNoBtn")
     private val jobCardLayout: TitledPane by fxid("jobCardLayout")
+    private val jobQuestionare: TitledPane by fxid("jobQuestionare")
     /** End of [JobCard]**/
 
     /** Start of [JobCardQuery]**/
@@ -113,7 +115,11 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             jobClassCombo.apply {
-                enableWhen { Account.currentUser.get().permission!!.updateOfficeFieldProp }
+                enableWhen {
+                    val user = Account.currentUser.get()
+                    user.permission!!.updateOfficeFieldProp.authorized(user)
+                }
+
                 tooltip = Tooltip("Select job class.")
                 bindCombo(jobCardModel.jobClass)
                 setOnMouseClicked {
@@ -124,7 +130,10 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             jobAreaCombo.apply {
-                enableWhen { Account.currentUser.get().permission!!.updateOfficeFieldProp }
+                enableWhen {
+                    val user = Account.currentUser.get()
+                    user.permission!!.updateOfficeFieldProp.authorized(user)
+                }
                 tooltip = Tooltip("Select work area.")
                 bindCombo(jobCardModel.workArea)
                 setOnMouseClicked {
@@ -141,7 +150,10 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             orderNoBtn.apply {
-                enableWhen { Account.currentUser.get().permission?.updateOfficeFieldProp!! }
+                enableWhen {
+                    val user = Account.currentUser.get()
+                    user.permission!!.addOrderNumberProp.authorized(user)
+                }
                 action {
                     if (!jobCardModel.item.id.isOldId()) {
                         parseResults(Results.Error(Results.JobCardNotPersistedException()))
@@ -154,7 +166,10 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             saveJobCardBtn.apply {
-                enableWhen { Account.currentUser.get().permission?.addJobCardProp!! }
+                enableWhen {
+                    val user = Account.currentUser.get()
+                    user.permission!!.addJobCardProp.authorized(user)
+                }
                 enableWhen { jobCardModel.dirty }
                 graphic = FontAwesomeIconView(FontAwesomeIcon.SAVE).apply {
                     style {
@@ -277,11 +292,17 @@ class HomeController : AbstractModelTableController<JobCard>("") {
             }
 
             contextmenu {
-                item("Work Areas") { action { find(WorkAreaTableController::class).openModal() } }
-                item("Job Class") { action { find(JobClassTableController::class).openModal() } }
+                val user = Account.currentUser.get()
+                item("Work Areas") {
+                    enableWhen { user.permission!!.addWorkAreaProp.authorized(user) }
+                    action { find(WorkAreaTableController::class).openModal() }
+                }
+                item("Job Class") {
+                    enableWhen { user.permission!!.addJobClassProp.authorized(user) }
+                    action { find(JobClassTableController::class).openModal() }
+                }
             }
             /** End of [JobCardQuery] view init **/
-
 
             center {
                 tableView = tableview(modelList) {
@@ -421,12 +442,13 @@ class HomeController : AbstractModelTableController<JobCard>("") {
         }
     }
 
-    private fun refreshJobCardPermissions(){
+    private fun refreshJobCardPermissions() {
         val user = Account.currentUser.get()
-        deletableWhen { user.permission!!.deleteJobCardProp }
-        jobCardLayout.enableWhen {user.permission!!.addJobCardProp }
-        jobClassCombo.enableWhen { user.permission!!.addJobClassProp }
-        jobAreaCombo.enableWhen { user.permission!!.addWorkAreaProp }
-        orderNoBtn.enableWhen { user.permission!!.addOrderNumberProp }
+        deletableWhen { user.permission!!.deleteJobCardProp.authorized(user) }
+        jobCardLayout.enableWhen { user.permission!!.addJobCardProp.authorized(user) }
+        jobClassCombo.enableWhen { user.permission!!.addJobClassProp.authorized(user) }
+        jobAreaCombo.enableWhen { user.permission!!.addWorkAreaProp.authorized(user) }
+        orderNoBtn.enableWhen { user.permission!!.addOrderNumberProp.authorized(user) }
+        jobQuestionare.enableWhen { user.permission!!.updateOfficeFieldProp.authorized(user) }
     }
 }

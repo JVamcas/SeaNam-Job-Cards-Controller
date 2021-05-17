@@ -20,7 +20,7 @@
 <BorderPane prefHeight="903.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <left>
        <VBox prefHeight="903.0" prefWidth="333.0" style="-fx-border-color: #073010; -fx-border-width: 2;">
-           <TitledPane accessibleRole="IMAGE_VIEW" alignment="CENTER" blendMode="MULTIPLY" prefHeight="286.0" prefWidth="377.0" text="Add/ Edit User" textAlignment="CENTER" textFill="#0c5437" underline="true">
+           <TitledPane fx:id="userLayout" accessibleRole="IMAGE_VIEW" alignment="CENTER" blendMode="MULTIPLY" prefHeight="286.0" prefWidth="377.0" text="Add/ Edit User" textAlignment="CENTER" textFill="#0c5437" underline="true">
                <font>
                    <Font name="System Bold" size="12.0" />
                </font>
@@ -120,7 +120,7 @@
                </HBox>
                </GridPane>
            </TitledPane>
-         <TitledPane alignment="CENTER" text="User Permissions" textFill="#1310d7">
+         <TitledPane fx:id="userPermission" alignment="CENTER" text="User Permissions" textFill="#1310d7">
            <content>
                <VBox prefHeight="200.0" prefWidth="330.0" spacing="5.0">
                   <children>

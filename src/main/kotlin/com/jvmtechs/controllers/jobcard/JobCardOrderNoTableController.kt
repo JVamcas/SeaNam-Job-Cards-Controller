@@ -6,6 +6,7 @@ import com.jvmtechs.model.*
 import com.jvmtechs.repos.JobCardRepo
 import com.jvmtechs.repos.JobClassRepo
 import com.jvmtechs.repos.OrderNoRepo
+import com.jvmtechs.utils.ParseUtil.Companion.authorized
 import com.jvmtechs.utils.ParseUtil.Companion.generalTxtFieldValidation
 import com.jvmtechs.utils.ParseUtil.Companion.isNumber
 import com.jvmtechs.utils.Results
@@ -63,7 +64,12 @@ class JobCardOrderNoTableController : AbstractModelTableController<OrderNumber>(
                 enableCellEditing()
 
                 contextmenu {
+
                     item("Delete Order") {
+                        enableWhen {
+                            val user = Account.currentUser.get()
+                            user.permission!!.deleteOrderNumberProp.authorized(user)
+                        }
                         action {
                             GlobalScope.launch {
                                 val results = selectedItem?.let { orderNoRepo.deleteOrderNumber(it) }

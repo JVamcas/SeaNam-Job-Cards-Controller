@@ -4,6 +4,7 @@ import com.jvmtechs.controllers.AbstractModelTableController
 import com.jvmtechs.model.WorkArea
 import com.jvmtechs.model.WorkAreaModel
 import com.jvmtechs.repos.WorkAreaRepo
+import com.jvmtechs.utils.ParseUtil.Companion.authorized
 import com.jvmtechs.utils.Results
 import com.jvmtechs.utils.cell.EditingCell
 import javafx.collections.ObservableList
@@ -52,6 +53,10 @@ class WorkAreaTableController : AbstractModelTableController<WorkArea>("Work Are
 
                 contextmenu {
                     item("Delete Area") {
+                        enableWhen {
+                            val user = Account.currentUser.get()
+                            user.permission!!.deleteWorkAreaProp.authorized(user)
+                        }
                         action {
                             GlobalScope.launch {
                                 val results = selectedItem?.let { workAreaRepo.deleteWorkArea(it) }

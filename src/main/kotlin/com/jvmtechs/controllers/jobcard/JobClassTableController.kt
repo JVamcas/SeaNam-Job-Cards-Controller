@@ -4,6 +4,7 @@ import com.jvmtechs.controllers.AbstractModelTableController
 import com.jvmtechs.model.JobClass
 import com.jvmtechs.model.JobClassModel
 import com.jvmtechs.repos.JobClassRepo
+import com.jvmtechs.utils.ParseUtil.Companion.authorized
 import com.jvmtechs.utils.ParseUtil.Companion.isNumber
 import com.jvmtechs.utils.Results
 import com.jvmtechs.utils.cell.EditingCell
@@ -58,6 +59,10 @@ class JobClassTableController: AbstractModelTableController<JobClass>("") {
 
                 contextmenu {
                     item("Delete class") {
+                        enableWhen {
+                            val user = Account.currentUser.get()
+                            user.permission!!.deleteJobClassProp.authorized(user)
+                        }
                         action {
                             GlobalScope.launch {
                                 val results = selectedItem?.let { jobClassRepo.deleteJobClass(it) }
