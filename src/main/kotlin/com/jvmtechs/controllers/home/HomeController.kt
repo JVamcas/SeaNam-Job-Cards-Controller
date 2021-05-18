@@ -22,6 +22,7 @@ import javafx.collections.ObservableList
 import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.HBox
+import javafx.scene.layout.VBox
 import javafx.scene.text.Text
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -50,7 +51,7 @@ class HomeController : AbstractModelTableController<JobCard>("") {
     private val jobTypeCombo: ComboBox<String> by fxid("jobTypeCombo")
     private val orderNoBtn: Button by fxid("orderNoBtn")
     private val jobCardLayout: TitledPane by fxid("jobCardLayout")
-    private val jobQuestionare: TitledPane by fxid("jobQuestionare")
+    private val jobQuestionare: VBox by fxid("jobQuestionare")
     /** End of [JobCard]**/
 
     /** Start of [JobCardQuery]**/
@@ -181,7 +182,8 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                     GlobalScope.launch {
                         val jobCard = jobCardModel.item.also {
                             it.createDateProperty.set(DateUtil.today())
-                            it.employee = Account.currentUser.get()
+                            if (it.employee == null)
+                                it.employee = Account.currentUser.get()
                         }
                         jobCard.createDateProperty.set(DateUtil.today())
                         val results =
@@ -345,21 +347,19 @@ class HomeController : AbstractModelTableController<JobCard>("") {
                             cell
                         }
                     }
-                    column("Employee", JobCard::employee).apply {
-                        contentWidth(padding = 20.0, useAsMin = true)
-
-                    }
-
+                    column("Employee", JobCard::employee).apply { contentWidth(padding = 20.0, useAsMin = true) }
                     column("Done Satisfactory", JobCard::isWorkDoneSatisfactoryProperty) {
                         contentWidth(padding = 10.0, useAsMin = true)
                         prefWidth = 120.0
                         minWidth = prefWidth
                     }
+
                     column("Time Sufficient", JobCard::isTimeFrameSatisfactoryProperty) {
                         prefWidth = 120.0
                         minWidth = prefWidth
                         contentWidth(padding = 10.0, useAsMin = true)
                     }
+
                     column("Other Comments", JobCard::otherExplanationProperty) {
                         prefWidth = 300.0
                         minWidth = prefWidth
@@ -446,9 +446,9 @@ class HomeController : AbstractModelTableController<JobCard>("") {
         val user = Account.currentUser.get()
         deletableWhen { user.permission!!.deleteJobCardProp.authorized(user) }
         jobCardLayout.enableWhen { user.permission!!.addJobCardProp.authorized(user) }
-        jobClassCombo.enableWhen { user.permission!!.addJobClassProp.authorized(user) }
-        jobAreaCombo.enableWhen { user.permission!!.addWorkAreaProp.authorized(user) }
-        orderNoBtn.enableWhen { user.permission!!.addOrderNumberProp.authorized(user) }
+        jobClassCombo.enableWhen { user.permission!!.updateOfficeFieldProp.authorized(user) }
+        jobAreaCombo.enableWhen { user.permission!!.updateOfficeFieldProp.authorized(user) }
+        orderNoBtn.enableWhen { user.permission!!.updateOfficeFieldProp.authorized(user) }
         jobQuestionare.enableWhen { user.permission!!.updateOfficeFieldProp.authorized(user) }
     }
 }

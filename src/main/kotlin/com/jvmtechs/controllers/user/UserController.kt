@@ -40,7 +40,7 @@ class UserController : AbstractModelTableController<User>(title = "") {
     private val deleteWorkAreaProp: CheckBox by fxid("deleteWorkAreaProp")
     private val addJobClassProp: CheckBox by fxid("addJobClassProp")
     private val deleteJobClassProp: CheckBox by fxid("deleteJobClassProp")
-    private val addOrderNumberProp: CheckBox by fxid("addOrderNumberProp")
+//    private val addOrderNumberProp: CheckBox by fxid("addOrderNumberProp")
     private val deleteOrderNumberProp: CheckBox by fxid("deleteOrderNumberProp")
     private val userLayout: TitledPane by fxid("userLayout")
     private val userPermission: TitledPane by fxid("userPermission")
@@ -67,7 +67,7 @@ class UserController : AbstractModelTableController<User>(title = "") {
         deleteWorkAreaProp.apply { bind(accessTypeModel.deleteWorkArea) }
         addJobClassProp.apply { bind(accessTypeModel.addJobClass) }
         deleteJobClassProp.apply { bind(accessTypeModel.deleteJobClass) }
-        addOrderNumberProp.apply { bind(accessTypeModel.addOrderNo) }
+//        addOrderNumberProp.apply { bind(accessTypeModel.addOrderNo) }
         deleteOrderNumberProp.apply { bind(accessTypeModel.deleteOrderNo) }
 
         saveUserAccessBtn.apply {
@@ -222,7 +222,6 @@ class UserController : AbstractModelTableController<User>(title = "") {
                     accessTypeModel.item = AccessType()
                 }
             }
-
             userModel.validate(decorateErrors = false)
         }
     }

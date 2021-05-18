@@ -124,7 +124,7 @@
            <content>
                <VBox prefHeight="200.0" prefWidth="330.0" spacing="5.0">
                   <children>
-                     <CheckBox fx:id="updateOfficeFieldProp" mnemonicParsing="false" text="Complete job questionare" />
+                     <CheckBox fx:id="updateOfficeFieldProp" mnemonicParsing="false" text="Update Job Card official fields" />
                      <CheckBox fx:id="addUserProp" mnemonicParsing="false" text="Add/ Edit User details" />
                      <CheckBox fx:id="deleteUserProp" mnemonicParsing="false" text="Delete User" />
                      <CheckBox fx:id="addJobCardProp" mnemonicParsing="false" text="Add/ Edit Job Card" />
@@ -133,7 +133,6 @@
                      <CheckBox fx:id="deleteWorkAreaProp" mnemonicParsing="false" text="Delete Work Area" />
                      <CheckBox fx:id="addJobClassProp" mnemonicParsing="false" text="Add/Edit Job Class" />
                      <CheckBox fx:id="deleteJobClassProp" mnemonicParsing="false" text="Delete Job Class" />
-                     <CheckBox fx:id="addOrderNumberProp" mnemonicParsing="false" text="Add/Edit numbers" />
                      <CheckBox fx:id="deleteOrderNumberProp" mnemonicParsing="false" text="Delete order numbers." />
                      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                         <children>

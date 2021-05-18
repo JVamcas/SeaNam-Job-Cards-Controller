@@ -87,8 +87,8 @@
                                                <Font name="System Bold" size="12.0" />
                                            </font>
                                        </TitledPane>
-                              <ComboBox fx:id="jobAreaCombo" prefHeight="21.0" prefWidth="207.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ComboBox fx:id="jobClassCombo" prefHeight="21.0" prefWidth="209.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="jobAreaCombo" prefHeight="21.0" prefWidth="207.0" style="-fx-background-color: #CF5439;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="jobClassCombo" prefHeight="21.0" prefWidth="209.0" style="-fx-background-color: #CF5439;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                               <ComboBox fx:id="jobTypeCombo" accessibleRole="BUTTON" prefHeight="21.0" prefWidth="210.0" GridPane.columnIndex="3" />
                               <Label alignment="CENTER_RIGHT" layoutX="366.0" layoutY="55.0" prefHeight="21.0" prefWidth="46.0" text="Type:" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                                  <padding>
@@ -156,42 +156,46 @@
                            <content>
                                <VBox prefHeight="281.0" prefWidth="611.0">
                                    <children>
-                              <CheckBox fx:id="workDoneSats" mnemonicParsing="false" text="Was work done satisfactory?">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" top="5.0" />
-                                 </padding>
-                              </CheckBox>
-                              <CheckBox fx:id="needReplacement" mnemonicParsing="false" text="Does it need to be replaced?">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" />
-                                 </padding>
-                              </CheckBox>
-                              <CheckBox fx:id="recurringJob" mnemonicParsing="false" text="Is it a recurring job?">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" />
-                                 </padding>
-                              </CheckBox>
-                              <CheckBox fx:id="timeSatisfactory" mnemonicParsing="false" text="Was the timeframe satisfactory?">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" />
-                                 </padding>
-                              </CheckBox>
-                              <CheckBox fx:id="doneToSpecs" mnemonicParsing="false" text="Was the work done according to expectations?">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" />
-                                 </padding>
-                              </CheckBox>
-                                       <TitledPane animated="false" text="If you did not check all the boxes above, Explain.">
-                                           <VBox.margin>
-                                               <Insets bottom="5.0" top="5.0" />
-                                           </VBox.margin>
-                                           <content>
-                                               <TextArea fx:id="otherExplanations" prefHeight="85.0" prefWidth="589.0" />
-                                           </content>
-                                       </TitledPane>
+                              <VBox fx:id="jobQuestionare" style="-fx-background-color: #CF5439;">
+                                 <children>
+                                    <CheckBox fx:id="workDoneSats" mnemonicParsing="false" style="-fx-background-color: #CF5439;" text="Was work done satisfactory?">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" top="5.0" />
+                                       </padding>
+                                    </CheckBox>
+                                    <CheckBox fx:id="needReplacement" mnemonicParsing="false" style="-fx-background-color: #CF5439;" text="Does it need to be replaced?">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" />
+                                       </padding>
+                                    </CheckBox>
+                                    <CheckBox fx:id="recurringJob" mnemonicParsing="false" text="Is it a recurring job?">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" />
+                                       </padding>
+                                    </CheckBox>
+                                    <CheckBox fx:id="timeSatisfactory" mnemonicParsing="false" text="Was the timeframe satisfactory?">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" />
+                                       </padding>
+                                    </CheckBox>
+                                    <CheckBox fx:id="doneToSpecs" mnemonicParsing="false" text="Was the work done according to expectations?">
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </CheckBox>
+                                             <TitledPane animated="false" text="If you did not check all the boxes above, Explain.">
+                                                 <content>
+                                                     <TextArea fx:id="otherExplanations" prefHeight="85.0" prefWidth="589.0" />
+                                                 </content>
+                                             </TitledPane>
+                                 </children>
+                              </VBox>
                                        <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="589.0">
                                            <children>
-                                    <Button fx:id="orderNoBtn" mnemonicParsing="false" style="-fx-border-color: #088a35; -fx-border-radius: 5; -fx-background-color: #ffffff;" text="Order No(s)" textFill="#088a35">
+                                    <Button fx:id="orderNoBtn" mnemonicParsing="false" style="-fx-border-color: #CF5439; -fx-border-radius: 5; -fx-background-color: #CF5439;" text="Order No(s)" textFill="#fcfcfc">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
